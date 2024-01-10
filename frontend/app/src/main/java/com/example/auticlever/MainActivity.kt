@@ -1,11 +1,28 @@
 package com.example.auticlever
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.auticlever.databinding.ActivityMainBinding
+import com.example.auticlever.presenter.main.MainFragment
+
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//
+//        val mainFragment = MainFragment()
+//        supportFragmentManager.beginTransaction().replace(R.id.mainFrameLayout, mainFragment).commit()
+        if (savedInstanceState == null) {
+            // 액티비티가 처음 생성될 때 프래그먼트를 추가
+            supportFragmentManager.beginTransaction()
+                .add(binding.fragmentContainer.id, MainFragment())
+                .commit()
+        }
     }
 }
