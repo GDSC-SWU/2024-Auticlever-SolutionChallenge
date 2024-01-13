@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_auticlever"
         tools:listitem="@layout/item_main_consult"
-        tools:itemCount="1"/>
+        tools:itemCount="4"/>
 
     <TextView
         android:id="@+id/tv_consult_records"
@@ -167,7 +167,7 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/main_rv_half"
         android:paddingLeft="20dp"
-        android:paddingTop="86dp"
+        android:paddingTop="90dp"
         android:paddingRight="16dp"
         android:paddingBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -175,8 +175,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_notebook"
         app:spanCount="1"
-        tools:listitem="@layout/item_main_conver"
-        tools:itemCount="1"/>
+        tools:listitem="@layout/item_main_conver" />
 
     <TextView
         android:id="@+id/tv_conversation"
@@ -190,4 +189,17 @@
         android:fontFamily="@font/font_pretendard_semibold"
         app:layout_constraintStart_toStartOf="@+id/rv_conversation"
         app:layout_constraintTop_toTopOf="@+id/rv_conversation" />
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/font_pretendard_bold"
+        android:textColor="@color/gray3"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/rv_conversation"
+        app:layout_constraintTop_toBottomOf="@+id/tv_conversation"
+        tools:text="Dec" />
 </androidx.constraintlayout.widget.ConstraintLayout>

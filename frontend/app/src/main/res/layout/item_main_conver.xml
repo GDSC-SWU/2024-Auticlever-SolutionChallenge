@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="18dp">
 
     <ImageView
         android:id="@+id/iv_circle"
@@ -61,4 +62,19 @@
         app:layout_constraintStart_toEndOf="@id/iv_circle"
         app:layout_constraintTop_toBottomOf="@id/tv_text1"
         tools:text="08:02 ~ 08:17 (15분)" />
+
+    <TextView
+        android:id="@+id/tv_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:paddingVertical="12dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="11dp"
+        android:background="@drawable/main_rv_memo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text2"
+        tools:text="I don't answer topics I'm not nterested in." />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
