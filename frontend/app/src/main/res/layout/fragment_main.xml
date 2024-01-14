@@ -1,14 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.main.MainFragment">
+    android:background="@drawable/main_background"
+    tools:context=".MainActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/iv_auticlever"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/main_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/main_setting" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_consult_records"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/main_rv_round"
+        android:paddingLeft="20dp"
+        android:paddingTop="45dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="20dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="1"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_auticlever"
+        tools:listitem="@layout/item_main_consult"
+        tools:itemCount="4"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_consult_records"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        android:text="Consultation history"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/font_pretendard_semibold"
+        app:layout_constraintStart_toStartOf="@+id/rv_consult_records"
+        app:layout_constraintTop_toTopOf="@+id/rv_consult_records" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_consult_records"
+        app:layout_constraintTop_toTopOf="@+id/rv_consult_records"
+        app:srcCompat="@drawable/main_arrow" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_consult_add"
+        android:layout_width="53dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        android:text="add"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/font_pretendard_regular"
+        android:background="@drawable/main_btn_add"
+        app:layout_constraintEnd_toEndOf="@+id/rv_consult_records"
+        app:layout_constraintTop_toTopOf="@+id/rv_consult_records" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_which_topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/main_rv_round"
+        android:paddingLeft="20dp"
+        android:paddingTop="86dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_consult_records"
+        tools:listitem="@layout/item_main_keyword" />
+
+    <TextView
+        android:id="@+id/tv_which1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:text="What to talk about"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:fontFamily="@font/font_pretendard_bold"
+        app:layout_constraintStart_toStartOf="@+id/rv_which_topic"
+        app:layout_constraintTop_toTopOf="@+id/rv_which_topic" />
+
+    <TextView
+        android:id="@+id/tv_which2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/font_pretendard_bold"
+        android:text="conversation"
+        android:textColor="@color/primary"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/rv_which_topic"
+        app:layout_constraintTop_toTopOf="@+id/rv_which_topic" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_record"
+        android:layout_width="64dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/main_btn_record"
+        android:fontFamily="@font/font_pretendard_regular"
+        android:text="start"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/rv_which_topic"
+        app:layout_constraintTop_toTopOf="@+id/rv_which_topic" />
+
+    <ImageView
+        android:id="@+id/iv_notebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/main_notebook"
+        app:layout_constraintBottom_toTopOf="@+id/rv_conversation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_which_topic" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_conversation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/main_rv_half"
+        android:paddingLeft="20dp"
+        android:paddingTop="90dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_notebook"
+        app:spanCount="1"
+        tools:listitem="@layout/item_main_conver" />
+
+    <TextView
+        android:id="@+id/tv_conversation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="22dp"
+        android:text="Conversation history"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/font_pretendard_semibold"
+        app:layout_constraintStart_toStartOf="@+id/rv_conversation"
+        app:layout_constraintTop_toTopOf="@+id/rv_conversation" />
+
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/font_pretendard_bold"
+        android:textColor="@color/gray3"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/rv_conversation"
+        app:layout_constraintTop_toBottomOf="@+id/tv_conversation"
+        tools:text="Dec" />
+</androidx.constraintlayout.widget.ConstraintLayout>
