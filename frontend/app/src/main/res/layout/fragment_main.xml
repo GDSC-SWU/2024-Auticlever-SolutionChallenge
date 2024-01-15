@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    tools:context=".MainActivity">
+    tools:context=".presenter.main.MainFragment"
+    android:id="@+id/fragment_container">
 
     <ImageView
         android:id="@+id/iv_auticlever"
@@ -167,15 +168,13 @@
         android:layout_marginEnd="12dp"
         android:background="@drawable/main_rv_half"
         android:paddingLeft="20dp"
-        android:paddingTop="90dp"
+        android:paddingTop="64dp"
         android:paddingRight="16dp"
         android:paddingBottom="16dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_notebook"
-        app:spanCount="1"
-        tools:listitem="@layout/item_main_conver" />
+        tools:listitem="@layout/item_month" />
 
     <TextView
         android:id="@+id/tv_conversation"
@@ -190,16 +189,4 @@
         app:layout_constraintStart_toStartOf="@+id/rv_conversation"
         app:layout_constraintTop_toTopOf="@+id/rv_conversation" />
 
-    <TextView
-        android:id="@+id/tv_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="23dp"
-        android:fontFamily="@font/font_pretendard_bold"
-        android:textColor="@color/gray3"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/rv_conversation"
-        app:layout_constraintTop_toBottomOf="@+id/tv_conversation"
-        tools:text="Dec" />
 </androidx.constraintlayout.widget.ConstraintLayout>

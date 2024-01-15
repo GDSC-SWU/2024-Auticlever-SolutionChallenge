@@ -6,5 +6,11 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="tabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAppearance">@font/font_pretendard_regular</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
     <style name="Theme.Auticlever" parent="Base.Theme.Auticlever" />
 </resources>
