@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.example.auticlever.R
+import com.example.auticlever.databinding.FragmentMainBinding
+import com.example.auticlever.presenter.recording.RecordingFragment
 
 
 class MainFragment : Fragment() {
 
+    private lateinit var binding: FragmentMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 
@@ -20,8 +24,15 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater)
+
+        binding.btnRecord.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, RecordingFragment())
+                .commit()
+        }
+
+        return binding.root
     }
 
 }

@@ -2,4 +2,22 @@
     <string name="app_name">Auticlever</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- fragment_recoding text -->
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="recording_time">00:03.12</string>
+    <string name="keyword">keyword</string>
+    <string name="consultation">consultation</string>
+    <string name="suggested_keywords">suggested keywords</string>
+    <string name="refresh">refresh</string>
+    <string name="consult_memo">Showing multiple emotions</string>
+    <string name="month">Dec</string>
+
+    <!-- dialog text -->
+    <string name="dialog_delete_title">Do you really want to leave?</string>
+    <string name="dialog_delete_text">Your recording will be deleted when you leave this page.</string>
+    <string name="cancle">Cancle</string>
+    <string name="dialog_save_title">Do you want to save?</string>
+    <string name="dialog_save_text">You can\'t continue recording after you save a recording file.</string>
 </resources>

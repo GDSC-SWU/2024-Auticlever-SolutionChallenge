@@ -15,5 +15,5 @@
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Showing multiple emotions"/>
+        tools:text="@string/consult_memo"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

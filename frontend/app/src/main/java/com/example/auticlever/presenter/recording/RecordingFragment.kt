@@ -1,32 +1,34 @@
 package com.example.auticlever.presenter.recording
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.auticlever.R
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
+import com.example.auticlever.adapter.RecordingPagerAdapter
+import com.example.auticlever.databinding.FragmentRecordingBinding
+import com.example.auticlever.presenter.main.MainFragment
+import com.google.android.material.tabs.TabLayout
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecordingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RecordingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var viewPagers: ViewPager
+    lateinit var tabLayouts: TabLayout
+    lateinit var binding : FragmentRecordingBinding
+    lateinit var deleteBtn : ImageButton
+    lateinit var deleteTextView: TextView
+    lateinit var SaveBtn : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -34,27 +36,57 @@ class RecordingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recording, container, false)
+        binding = FragmentRecordingBinding.inflate(inflater)
+
+        setUpViewPager()
+
+        deleteBtn = binding.ibRecordingArrow
+        deleteTextView = binding.tvDelete
+        SaveBtn = binding.tvSave
+
+        deleteTextView.setOnClickListener{
+            DeleteDialog()
+        }
+        deleteBtn.setOnClickListener{
+            DeleteDialog()
+        }
+        SaveBtn.setOnClickListener{
+            SaveDialog()
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecordingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecordingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    fun fragmentdelete() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, MainFragment())
+            .commit()
+    }
+
+    private fun setUpViewPager() {
+
+        viewPagers = binding.viewPager
+        tabLayouts = binding.tabLayout
+
+        var adapter = RecordingPagerAdapter(childFragmentManager)
+        adapter.addFragment(KeywordsFragment(), "keyword")
+        adapter.addFragment(ConsultationFragment(), "consultation")
+
+        viewPagers!!.adapter = adapter
+        tabLayouts!!.setupWithViewPager(viewPagers)
+    }
+
+    private fun DeleteDialog() {
+        val DeleteDialog = DeleteDialog(requireContext(), this)
+        DeleteDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        DeleteDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        DeleteDialog.show()
+    }
+
+    private fun SaveDialog() {
+        val SaveDialog = SaveDialog(requireContext(), this)
+        SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        SaveDialog.show()
     }
 }
