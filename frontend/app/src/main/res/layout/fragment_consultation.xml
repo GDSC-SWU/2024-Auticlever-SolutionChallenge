@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_consult_recording"
-            tools:listitem="@layout/item_month" />
+            tools:listitem="@layout/item_recording_month" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

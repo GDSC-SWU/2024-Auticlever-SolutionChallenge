@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="18dp">
+    android:paddingTop="24dp">
 
     <ImageView
         android:id="@+id/iv_circle"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/recording_circle" />
+        tools:src="@drawable/consult_list_circle" />
 
     <TextView
         android:id="@+id/tv_day1"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="6dp"
-        android:textColor="#FF905A6E"
+        android:textColor="#FF5E5A90"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
         app:layout_constraintTop_toTopOf="@id/iv_circle"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="20dp"
-        android:textColor="#FF905A6E"
+        android:textColor="#FF5E5A90"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
         app:layout_constraintTop_toTopOf="@id/iv_circle"
@@ -48,34 +48,19 @@
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/iv_circle"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Airplane, airplane, airplane" />
+        tools:text="12/30 Center consultation" />
 
     <TextView
-        android:id="@+id/tv_text2"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/font_pretendard_regular"
         android:textColor="@color/gray3"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/iv_circle"
-        app:layout_constraintTop_toBottomOf="@id/tv_text1"
-        tools:text="08:02 ~ 08:17 (15분)" />
-
-    <TextView
-        android:id="@+id/tv_memo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:paddingVertical="12dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="11dp"
-        android:textColor="@color/black"
-        android:background="@drawable/recording_rv_memo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_text2"
-        tools:text="I don't answer topics I'm not nterested in." />
+        android:textSize="14sp"
+        android:text="Showing multiple emotions. This is MEMO.\nmax 2 lines"
+        app:layout_constraintStart_toEndOf="@+id/iv_circle"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
