@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="@+id/rv_consult_records" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_right_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -174,7 +174,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_notebook"
-        tools:listitem="@layout/item_month" />
+        tools:listitem="@layout/item_main_month" />
 
     <TextView
         android:id="@+id/tv_conversation"
