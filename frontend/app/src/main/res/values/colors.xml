@@ -10,4 +10,5 @@
     <color name="purplelight">#F4E6EB</color>
     <color name="purpletext">#905A6E</color>
     <color name="systemred">#EC3535</color>
+    <color name="quit_app">#686868</color>
 </resources>

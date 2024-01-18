@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="custom_dialog_width">284dp</dimen>
-    <dimen name="custom_dialog_height">172dp</dimen>
+    <dimen name="custom_dialog_height">180dp</dimen>
 </resources>

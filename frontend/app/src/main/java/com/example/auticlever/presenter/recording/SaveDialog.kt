@@ -8,6 +8,7 @@ import android.view.Window
 import android.widget.Button
 import com.example.auticlever.R
 import com.example.auticlever.databinding.DialogRecordingSaveBinding
+import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
 
 class SaveDialog(context: Context, private val recordingfragment: RecordingFragment) : Dialog(context) {
     private lateinit var binding : DialogRecordingSaveBinding
@@ -31,7 +32,8 @@ class SaveDialog(context: Context, private val recordingfragment: RecordingFragm
             dismiss() // 다이얼로그 닫기
         }
         SaveBtn.setOnClickListener{
-
+            recordingfragment.fragmentsave()
+            dismiss()
         }
     }
 

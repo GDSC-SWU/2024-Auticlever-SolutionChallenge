@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.auticlever.adapter.RecordingPagerAdapter
 import com.example.auticlever.databinding.FragmentRecordingBinding
 import com.example.auticlever.presenter.main.MainFragment
+import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
 import com.google.android.material.tabs.TabLayout
 
 class RecordingFragment : Fragment() {
@@ -60,6 +61,12 @@ class RecordingFragment : Fragment() {
     fun fragmentdelete() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, MainFragment())
+            .commit()
+    }
+
+    fun fragmentsave() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, RecordLoadingFragment())
             .commit()
     }
 
