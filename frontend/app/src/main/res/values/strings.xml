@@ -20,4 +20,9 @@
     <string name="cancle">Cancle</string>
     <string name="dialog_save_title">Do you want to save?</string>
     <string name="dialog_save_text">You can\'t continue recording after you save a recording file.</string>
+
+    <!-- loading -->
+    <string name="transcribing">Transcribing\na recording to text...</string>
+    <string name="quit_app">Do not quit the app!\nYou may get an error</string>
+    <string name="response"><u>There is no response</u></string>
 </resources>

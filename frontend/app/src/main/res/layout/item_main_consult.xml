@@ -13,6 +13,7 @@
         android:fontFamily="@font/font_pretendard_regular"
         android:textColor="@color/black"
         android:textSize="14sp"
+        android:lineSpacingExtra="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/consult_memo"/>
