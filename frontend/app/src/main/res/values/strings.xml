@@ -29,6 +29,7 @@
     <!-- recording detail -->
     <string name="date">2023-12-19</string>
     <string name="title_keyword">비행기, 뽀로로, 남극</string>
+    <string name="title_eng_keyword">12/19 Center consultation</string>
     <string name="memo_title">Memo</string>
     <string name="memo">Showing multiple emotions\nIf it gets long, show it like this. If it gets long,\nshow it like this.\nShow as many as you have\nShow as many as you have</string>
     <string name="pinning">pinning</string>
