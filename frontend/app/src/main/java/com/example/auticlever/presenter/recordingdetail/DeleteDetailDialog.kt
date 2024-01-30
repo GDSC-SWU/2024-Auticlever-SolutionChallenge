@@ -5,16 +5,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
-import android.widget.Button
 import com.example.auticlever.R
-import com.example.auticlever.databinding.DialogRecordingDeleteBinding
 import com.example.auticlever.databinding.DialogRecordingDetailDeleteBinding
-import com.example.auticlever.presenter.recording.RecordingFragment
 
 class DeleteDetailDialog(context: Context, private val recordingDetailfragment: RecordingDetailFragment) : Dialog(context) {
     private lateinit var binding: DialogRecordingDetailDeleteBinding
-    lateinit var cancleBtn: Button
-    lateinit var deleteBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +21,11 @@ class DeleteDetailDialog(context: Context, private val recordingDetailfragment: 
 
         windowSize()
 
-        cancleBtn = binding.btnCancle
-        deleteBtn = binding.btnDelete
-
-        cancleBtn.setOnClickListener {
+        binding.btnCancle.setOnClickListener {
             dismiss() // 다이얼로그 닫기
         }
-        deleteBtn.setOnClickListener {
+        binding.btnDelete.setOnClickListener {
+            recordingDetailfragment.fragmentleave()
             dismiss()
         }
     }

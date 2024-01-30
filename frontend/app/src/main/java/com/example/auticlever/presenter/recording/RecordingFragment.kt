@@ -8,23 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.viewpager.widget.ViewPager
 import com.example.auticlever.adapter.RecordingPagerAdapter
 import com.example.auticlever.databinding.FragmentRecordingBinding
 import com.example.auticlever.presenter.main.MainFragment
 import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
-import com.google.android.material.tabs.TabLayout
 
 class RecordingFragment : Fragment() {
 
-    lateinit var viewPagers: ViewPager
-    lateinit var tabLayouts: TabLayout
     lateinit var binding : FragmentRecordingBinding
-    lateinit var deleteBtn : ImageButton
-    lateinit var deleteTextView: TextView
-    lateinit var SaveTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,17 +31,13 @@ class RecordingFragment : Fragment() {
 
         setUpViewPager()
 
-        deleteBtn = binding.ibRecordingArrow
-        deleteTextView = binding.tvDelete
-        SaveTextView = binding.tvSave
-
-        deleteTextView.setOnClickListener{
+        binding.tvDelete.setOnClickListener{
             DeleteDialog()
         }
-        deleteBtn.setOnClickListener{
+        binding.ibRecordingArrow.setOnClickListener{
             DeleteDialog()
         }
-        SaveTextView.setOnClickListener{
+        binding.tvSave.setOnClickListener{
             SaveDialog()
         }
 
@@ -71,15 +58,12 @@ class RecordingFragment : Fragment() {
 
     private fun setUpViewPager() {
 
-        viewPagers = binding.viewPager
-        tabLayouts = binding.tabLayout
-
         var adapter = RecordingPagerAdapter(childFragmentManager)
         adapter.addFragment(KeywordsFragment(), "keyword")
         adapter.addFragment(ConsultationFragment(), "consultation")
 
-        viewPagers!!.adapter = adapter
-        tabLayouts!!.setupWithViewPager(viewPagers)
+        binding.viewPager!!.adapter = adapter
+        binding.tabLayout!!.setupWithViewPager(binding.viewPager)
     }
 
     private fun DeleteDialog() {

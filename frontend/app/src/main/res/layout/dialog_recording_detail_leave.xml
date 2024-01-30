@@ -9,7 +9,7 @@
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_delete_title"
+        android:text="@string/dialog_leave_title"
         android:textColor="@color/black"
         android:textAppearance="@font/font_pretendard_semibold"
         android:textSize="16sp"
