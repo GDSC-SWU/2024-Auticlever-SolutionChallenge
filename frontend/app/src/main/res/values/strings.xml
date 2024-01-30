@@ -25,4 +25,31 @@
     <string name="transcribing">Transcribing\na recording to text...</string>
     <string name="quit_app">Do not quit the app!\nYou may get an error</string>
     <string name="response"><u>There is no response</u></string>
+
+    <!-- recording detail -->
+    <string name="date">2023-12-19</string>
+    <string name="title_keyword">비행기, 뽀로로, 남극</string>
+    <string name="memo_title">Memo</string>
+    <string name="memo">Showing multiple emotions\nIf it gets long, show it like this. If it gets long,\nshow it like this.\nShow as many as you have\nShow as many as you have</string>
+    <string name="pinning">pinning</string>
+    <string name="ai_summarize_title">AI summarizes</string>
+    <string name="ai_summarize">Showing multiple emotions\nIf it gets long, show it like this. If it gets long,\nshow it like this.\nShow as many as you have\nShow as many as you have</string>
+    <string name="recording_content_title">Recording contents</string>
+    <string name="recording_content">
+        Lorem ipsum dolor sit amet consectetur. Integer nunc eget leo potenti odio tempus nulla sem eget. Imperdiet ullamcorper cursus morbi amet tortor sollicitudin elementum.
+        Amet mattis amet consectetur pellentesque magna pharetra ac. Nunc nulla pellentesque sollicitudin ultrices. Sit sed viverra amet purus habitant elit vel. Vulputate in eget diam viverra.
+        Ut integer et eget egestas quam leo eget. Eleifend ultricies diam nisl egestas mus pellentesque praesent odio. Justo arcu nunc pharetra mattis neque sapien magna. In fermentum id cras quis ornare velit ultricies sed.
+        In donec facilisis eget sed leo imperdiet nulla volutpat. Et et vel donec at aliquet. Id semper egestas adipiscing scelerisque. Aliquam imperdiet arcu pretium ut mattis at bibendum tempor. Hendrerit mauris malesuada et velit.
+        A semper ultrices eget mi nulla quam. Mi nunc nunc sit risus in blandit commodo mauris faucibus. A laoreet lacus turpis tellus platea quis. Auctor neque vestibulum mus habitasse orci lectus viverra malesuada gravida.
+        Sed mi odio tincidunt adipiscing ac sed in. At odio at sit lacus consequat condimentum. Tempor a dui odio eget porta nisi iaculis nibh in. Faucibus pretium adipiscing et proin eu sapien. Ut a ultrices eget nullam magnis tristique.
+        Cras lectus dolor pulvinar aenean sed etiam arcu id. Eget eget amet id cras vitae. Nunc tempor aliquet ac faucibus pellentesque placerat et. Sed felis non nibh lorem urna eget massa varius ultricies. Non mauris at vel rhoncus aliquam placerat.
+        Tempor ac risus tincidunt tellus tincidunt commodo. Eleifend morbi fusce ultricies cras feugiat tristique id tellus. Ligula sem massa duis in semper. Pellentesque tellus ultricies tempus accumsan erat est odio.
+        Imperdiet pellentesque dui nibh feugiat mollis mattis molestie. Tempus tempor diam nunc convallis integer quis dapibus platea ut. Vitae volutpat duis tortor turpis. Integer id sed eget gravida. Libero at diam aliquet consequat.
+        Ullamcorper lacus dictum suscipit aliquam turpis cursus. Cras vitae et elementum cras erat. Faucibus at urna dui sit enim. Suspendisse magna mauris fusce pretium leo sit aliquet eu donec. Arcu purus rhoncus tempus quis quisque vel massa.
+        Vulputate non habitasse in felis ipsum blandit lectus. Morbi mauris quis ut enim. Metus purus justo tempus nulla. A sit pulvinar posuere ut. Aliquam in nisi amet non. Luctus proin gravida aliquet diam cras.
+        Egestas pretium venenatis interdum commodo vitae eros velit. Arcu neque aliquam amet aliquet scelerisque molestie risus id tellus. Interdum nullam id scelerisque dignissim nulla pretium. Urna neque sed quam eu mattis.
+        Fames ut amet quis id tellus augue scelerisque dignissim. Ornare erat tincidunt augue tempus vel vitae. Porta libero mattis cras sit.
+    </string>
+    <string name="start_time">00:03</string>
+    <string name="end_time">00:03</string>
 </resources>
