@@ -11,6 +11,7 @@ import com.example.auticlever.R
 import com.example.auticlever.databinding.FragmentRecordLoadingBinding
 import com.example.auticlever.databinding.FragmentRecordingBinding
 import com.example.auticlever.presenter.recording.RecordingFragment
+import com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment
 
 class RecordLoadingFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class RecordLoadingFragment : Fragment() {
         response = binding.tvResponse
         response.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id, RecordingFragment())
+                .replace(binding.fragmentContainer.id, RecordingDetailFragment())
                 .commit()
         }
 

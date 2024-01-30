@@ -10,6 +10,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="38dp"
+        android:background="@color/white"
         app:elevation="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +74,9 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
         app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -125,8 +128,8 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_date"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
 
-            <TextView
-                android:id="@+id/tv_memo"
+            <EditText
+                android:id="@+id/et_memo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
@@ -190,7 +193,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/gray2"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/tv_memo"
+                app:layout_constraintTop_toBottomOf="@+id/et_memo"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
 
@@ -230,6 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginHorizontal="20dp"
+                android:paddingBottom="120dp"
                 android:text="@string/recording_content"
                 android:textAppearance="@font/font_pretendard_regular"
                 android:textSize="14sp"
@@ -260,7 +264,6 @@
         android:id="@+id/bottom_appbar"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        app:elevation="0dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
