@@ -15,11 +15,14 @@
     <string name="month">Dec</string>
 
     <!-- dialog text -->
-    <string name="dialog_delete_title">Do you really want to leave?</string>
+    <string name="dialog_leave_title">Do you really want to leave?</string>
     <string name="dialog_delete_text">Your recording will be deleted when you leave this page.</string>
     <string name="cancle">Cancle</string>
     <string name="dialog_save_title">Do you want to save?</string>
     <string name="dialog_save_text">You can\'t continue recording after you save a recording file.</string>
+    <string name="dialog_leave_text">If you leave the window without saving, your modifications are not saved.</string>
+    <string name="dialog_delete_title">Do you really want to delete it?</string>
+    <string name="dialog_both_delete_text">Both the recording and the note content will be deleted.</string>
 
     <!-- loading -->
     <string name="transcribing">Transcribing\na recording to text...</string>

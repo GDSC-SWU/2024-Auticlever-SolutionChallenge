@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
@@ -25,7 +24,7 @@ class RecordingFragment : Fragment() {
     lateinit var binding : FragmentRecordingBinding
     lateinit var deleteBtn : ImageButton
     lateinit var deleteTextView: TextView
-    lateinit var SaveBtn : TextView
+    lateinit var SaveTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +42,7 @@ class RecordingFragment : Fragment() {
 
         deleteBtn = binding.ibRecordingArrow
         deleteTextView = binding.tvDelete
-        SaveBtn = binding.tvSave
+        SaveTextView = binding.tvSave
 
         deleteTextView.setOnClickListener{
             DeleteDialog()
@@ -51,7 +50,7 @@ class RecordingFragment : Fragment() {
         deleteBtn.setOnClickListener{
             DeleteDialog()
         }
-        SaveBtn.setOnClickListener{
+        SaveTextView.setOnClickListener{
             SaveDialog()
         }
 

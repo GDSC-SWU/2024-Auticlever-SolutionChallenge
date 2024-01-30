@@ -1,32 +1,25 @@
 package com.example.auticlever.presenter.recordingdetail
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.auticlever.R
+import android.view.Window
+import android.widget.TextView
+import com.example.auticlever.databinding.FragmentRecordingDetailBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RecordingDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RecordingDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var binding : FragmentRecordingDetailBinding
+    lateinit var deleteTextView: TextView
+    lateinit var SaveTextView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -34,27 +27,36 @@ class RecordingDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recording_detail, container, false)
+        binding = FragmentRecordingDetailBinding.inflate(inflater)
+
+        deleteTextView = binding.tvDelete
+        SaveTextView = binding.tvSave
+
+        deleteTextView.setOnClickListener{
+            DeleteDialog()
+        }
+        SaveTextView.setOnClickListener{
+            SaveDialog()
+        }
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RecordingDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecordingDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun DeleteDialog() {
+        val DeleteDialog =
+            com.example.auticlever.presenter.recordingdetail.DeleteDetailDialog(requireContext(), this)
+        DeleteDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        DeleteDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        DeleteDialog.show()
     }
+
+    private fun SaveDialog() {
+        val SaveDialog =
+            com.example.auticlever.presenter.recordingdetail.SaveDetailDialog(requireContext(), this)
+        SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        SaveDialog.show()
+    }
+
 }
