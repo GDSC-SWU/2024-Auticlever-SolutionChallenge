@@ -5,15 +5,11 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
-import android.widget.Button
 import com.example.auticlever.R
 import com.example.auticlever.databinding.DialogRecordingSaveBinding
-import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
 
 class SaveDialog(context: Context, private val recordingfragment: RecordingFragment) : Dialog(context) {
     private lateinit var binding : DialogRecordingSaveBinding
-    lateinit var cancleBtn : Button
-    lateinit var SaveBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,13 +21,10 @@ class SaveDialog(context: Context, private val recordingfragment: RecordingFragm
 
         windowSize()
 
-        cancleBtn = binding.btnCancle
-        SaveBtn = binding.btnSave
-
-        cancleBtn.setOnClickListener {
+        binding.btnCancle.setOnClickListener {
             dismiss() // 다이얼로그 닫기
         }
-        SaveBtn.setOnClickListener{
+        binding.btnSave.setOnClickListener{
             recordingfragment.fragmentsave()
             dismiss()
         }

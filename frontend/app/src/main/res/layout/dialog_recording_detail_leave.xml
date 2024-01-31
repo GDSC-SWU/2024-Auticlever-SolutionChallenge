@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="284dp"
-    android:layout_height="172dp"
+    android:layout_height="189dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/main_rv_round">
 
@@ -23,7 +23,7 @@
         android:id="@+id/tv_dialog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_delete_text"
+        android:text="@string/dialog_leave_text"
         android:textColor="@color/gray3"
         android:textAppearance="@font/font_pretendard_regular"
         android:textSize="14sp"

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presenter.recordingdetail.RecordingDetailFragment">
 
@@ -128,25 +129,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_date"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
 
-            <EditText
-                android:id="@+id/et_memo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="48dp"
-                android:paddingBottom="20dp"
-                android:text="@string/memo"
-                android:textAppearance="@font/font_pretendard_regular"
-                android:textSize="14sp"
-                android:lineSpacingExtra="6dp"
-                android:textColor="@color/gray2"
-                android:background="@drawable/main_rv_round"
-                android:backgroundTint="@color/gray6"
-                app:layout_constraintTop_toTopOf="@+id/tv_memo_title"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
-
             <TextView
                 android:id="@+id/tv_memo_title"
                 android:layout_width="match_parent"
@@ -154,7 +136,7 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginHorizontal="12dp"
                 android:paddingStart="20dp"
-                android:paddingTop="13dp"
+                android:paddingVertical="13dp"
                 android:text="@string/memo_title"
                 android:textAppearance="@font/font_pretendard_semibold"
                 android:textSize="16sp"
@@ -165,6 +147,28 @@
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout">
             </TextView>
+
+            <EditText
+                android:id="@+id/et_memo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="-16dp"
+                android:paddingTop="16dp"
+                android:paddingHorizontal="20dp"
+                android:paddingBottom="20dp"
+                android:text="@string/memo"
+                android:textAppearance="@font/font_pretendard_regular"
+                android:textSize="14sp"
+                android:lineSpacingExtra="6dp"
+                android:textColor="@color/gray2"
+                android:background="@drawable/main_rv_half"
+                android:backgroundTint="@color/gray6"
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/tv_memo_title"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
+
 
             <CheckBox
                 android:id="@+id/check_pinning"
@@ -233,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginHorizontal="20dp"
-                android:paddingBottom="120dp"
+                android:paddingBottom="200dp"
                 android:text="@string/recording_content"
                 android:textAppearance="@font/font_pretendard_regular"
                 android:textSize="14sp"
@@ -263,9 +267,9 @@
     <View
         android:id="@+id/bottom_appbar"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="55dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView_memo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -327,5 +331,28 @@
         android:background="@android:color/transparent"
         app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
         app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
+
+    <ScrollView
+        android:id="@+id/scrollView_memo"
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/et_bottom_memo"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:paddingVertical="7dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/memo"
+            android:textAppearance="@font/font_pretendard_regular"
+            android:textSize="14sp"
+            android:lineSpacingExtra="6dp"
+            android:background="@color/gray6" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
