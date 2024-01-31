@@ -17,7 +17,7 @@
     <!-- dialog text -->
     <string name="dialog_leave_title">Do you really want to leave?</string>
     <string name="dialog_delete_text">Your recording will be deleted when you leave this page.</string>
-    <string name="cancle">Cancle</string>
+    <string name="cancle">Cancel</string>
     <string name="dialog_save_title">Do you want to save?</string>
     <string name="dialog_save_text">You can\'t continue recording after you save a recording file.</string>
     <string name="dialog_leave_text">If you leave the window without saving, your modifications are not saved.</string>
