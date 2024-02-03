@@ -23,6 +23,8 @@
     <string name="dialog_leave_text">If you leave the window without saving, your modifications are not saved.</string>
     <string name="dialog_delete_title">Do you really want to delete it?</string>
     <string name="dialog_both_delete_text">Both the recording and the note content will be deleted.</string>
+    <string name="dialog_tip_title">What is \'Main memo\'?</string>
+    <string name="dialog_tip_text">These are notes that you can see at the top of the home screen. \nYou can access and edit them from any consultation page. Write down to-dos or important insights! </string>
 
     <!-- loading -->
     <string name="transcribing">Transcribing\na recording to text...</string>
