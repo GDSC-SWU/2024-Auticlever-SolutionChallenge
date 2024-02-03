@@ -20,6 +20,8 @@
     <string name="cancle">Cancle</string>
     <string name="dialog_save_title">Do you want to save?</string>
     <string name="dialog_save_text">You can\'t continue recording after you save a recording file.</string>
+    <string name="dialog_tip_title">What is \'Main memo\'?</string>
+    <string name="dialog_tip_text">These are notes that you can see at the top of the home screen. \nYou can access and edit them from any consultation page. Write down to-dos or important insights! </string>
 
     <!-- loading -->
     <string name="transcribing">Transcribing\na recording to text...</string>
