@@ -60,11 +60,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <View
+    <com.example.auticlever.presenter.recording.SoundVisualizerView
         android:id="@+id/view_recording"
         android:layout_width="match_parent"
         android:layout_height="132dp"
+        android:paddingTop="27dp"
+        android:backgroundTint="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/tv_recording_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/recording_bar"
+        android:layout_width="1dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="27dp"
+        android:background="@color/gray3"
+        app:layout_constraintTop_toBottomOf="@id/tv_recording_time"
+        app:layout_constraintBottom_toTopOf="@id/ib_recording"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

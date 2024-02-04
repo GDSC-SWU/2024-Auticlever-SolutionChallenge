@@ -30,6 +30,7 @@ import java.util.Locale
 class RecordingFragment : Fragment() {
 
     lateinit var binding : FragmentRecordingBinding
+    private lateinit var soundVisualizerView: SoundVisualizerView
 
     private var mediaRecorder: MediaRecorder? = null
     private var isRecording = false
@@ -39,6 +40,7 @@ class RecordingFragment : Fragment() {
 
     private var recordingStartTime: Long = 0
     private val handler = Handler()
+
 
     companion object {
         private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
@@ -64,6 +66,12 @@ class RecordingFragment : Fragment() {
         binding = FragmentRecordingBinding.inflate(inflater)
 
         setUpViewPager()
+
+        soundVisualizerView = binding.viewRecording
+
+        soundVisualizerView.onRequestCurrentAmplitude = {
+            mediaRecorder?.maxAmplitude ?: 0
+        }
 
         binding.tvDelete.setOnClickListener{
             DeleteDialog()
@@ -130,8 +138,10 @@ class RecordingFragment : Fragment() {
                     start()
                     recordingStartTime = SystemClock.elapsedRealtime()
                     handler.postDelayed(recordingRunnable, 100)
+                    soundVisualizerView.startVisualizing(false)
                     isRecording = true
                     binding.ibRecording.setBackgroundResource(R.drawable.recording_stop)
+                    binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.systemred))
                     Log.d("TAG", "파일 저장 경로: $outputFile")
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -145,9 +155,11 @@ class RecordingFragment : Fragment() {
             stop()
             release()
             handler.removeCallbacks(recordingRunnable)
+            soundVisualizerView.stopVisualizing()
             isRecording = false
             binding.ibRecording.setBackgroundResource(R.drawable.recording_start)
             binding.tvRecordingTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray4))
+            binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray3))
             Log.d("Stop", "녹음 중단")
         }
         mediaRecorder = null
@@ -169,6 +181,7 @@ class RecordingFragment : Fragment() {
 
         binding.tvRecordingTime?.text = String.format("%02d:%02d.%02d", minutes, remainingSeconds, milliseconds)
     }
+
 
     fun fragmentdelete() {
         requireActivity().supportFragmentManager.beginTransaction()
