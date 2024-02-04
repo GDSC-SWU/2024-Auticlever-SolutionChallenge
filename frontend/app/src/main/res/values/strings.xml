@@ -38,6 +38,7 @@
     <string name="memo_title">Memo</string>
     <string name="memo">Showing multiple emotions\nIf it gets long, show it like this. If it gets long,\nshow it like this.\nShow as many as you have\nShow as many as you have</string>
     <string name="pinning">pinning</string>
+    <string name="unpinning">unpinning</string>
     <string name="ai_summarize_title">AI summarizes</string>
     <string name="ai_summarize">Showing multiple emotions\nIf it gets long, show it like this. If it gets long,\nshow it like this.\nShow as many as you have\nShow as many as you have</string>
     <string name="recording_content_title">Recording contents</string>

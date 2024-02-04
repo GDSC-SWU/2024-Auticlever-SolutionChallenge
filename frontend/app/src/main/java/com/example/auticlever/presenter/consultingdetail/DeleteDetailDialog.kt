@@ -1,22 +1,22 @@
 package com.example.auticlever.presenter.consultingdetail
 
-import com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
 import com.example.auticlever.R
+import com.example.auticlever.databinding.DialogRecordingDetailDeleteBinding
 
-class CloseDetailDialog(context: Context, private val closeDetailFragment: ConsultingDetailFragment) : Dialog(context) {
-    private lateinit var binding : DialogConsultDetailCloseBinding
+class DeleteDetailDialog(context: Context, private val consultingDetailfragment: com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragment) : Dialog(context) {
+    private lateinit var binding: DialogRecordingDetailDeleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setCancelable(false)
 
-        binding = DialogRecordingDetailLeaveBinding.inflate(LayoutInflater.from(context))
+        binding = DialogRecordingDetailDeleteBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
 
         windowSize()
@@ -24,8 +24,8 @@ class CloseDetailDialog(context: Context, private val closeDetailFragment: Consu
         binding.btnCancle.setOnClickListener {
             dismiss() // 다이얼로그 닫기
         }
-        binding.btnDelete.setOnClickListener{
-            recordingDetailfragment.fragmentleave()
+        binding.btnDelete.setOnClickListener {
+            consultingDetailfragment.fragmentremove()
             dismiss()
         }
     }
@@ -33,7 +33,7 @@ class CloseDetailDialog(context: Context, private val closeDetailFragment: Consu
     private fun windowSize() {
         val windowParams = window?.attributes
         windowParams?.width = context.resources.getDimensionPixelSize(R.dimen.custom_dialog_width)
-        windowParams?.height = context.resources.getDimensionPixelSize(R.dimen.custom_dialog_leave_height)
+        windowParams?.height = context.resources.getDimensionPixelSize(R.dimen.custom_dialog_height)
         window?.attributes = windowParams
     }
 }

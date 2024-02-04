@@ -8,7 +8,7 @@ import android.view.Window
 import com.example.auticlever.R
 import com.example.auticlever.databinding.DialogRecordingDetailDeleteBinding
 
-class DeleteDetailDialog(context: Context, private val recordingDetailfragment: RecordingDetailFragment) : Dialog(context) {
+class DeleteDetailDialog(context: Context, private val recordingDetailfragment: com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment) : Dialog(context) {
     private lateinit var binding: DialogRecordingDetailDeleteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
