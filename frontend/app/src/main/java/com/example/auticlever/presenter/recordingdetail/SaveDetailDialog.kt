@@ -9,7 +9,7 @@ import com.example.auticlever.R
 import com.example.auticlever.databinding.DialogRecordingDetailSaveBinding
 
 
-class SaveDetailDialog(context: Context, private val recordingDetailfragment: RecordingDetailFragment) : Dialog(context) {
+class SaveDetailDialog(context: Context, private val recordingDetailfragment: com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment) : Dialog(context) {
     private lateinit var binding : DialogRecordingDetailSaveBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

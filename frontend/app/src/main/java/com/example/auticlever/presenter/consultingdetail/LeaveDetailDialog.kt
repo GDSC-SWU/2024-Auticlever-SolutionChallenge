@@ -1,4 +1,4 @@
-package com.example.auticlever.presenter.recordingdetail
+package com.example.auticlever.presenter.consultingdetail
 
 import android.app.Dialog
 import android.content.Context
@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.Window
 import com.example.auticlever.R
 import com.example.auticlever.databinding.DialogRecordingDetailLeaveBinding
+import com.example.auticlever.presenter.main.MainFragment
 
-class LeaveDetailDialog(context: Context, private val recordingDetailfragment: com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment) : Dialog(context) {
+class LeaveDetailDialog(context: Context, private val consultingDetailfragment: com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragment) : Dialog(context) {
     private lateinit var binding : DialogRecordingDetailLeaveBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -25,7 +25,7 @@ class LeaveDetailDialog(context: Context, private val recordingDetailfragment: c
             dismiss() // 다이얼로그 닫기
         }
         binding.btnDelete.setOnClickListener{
-            recordingDetailfragment.fragmentleave()
+            consultingDetailfragment.goMain()
             dismiss()
         }
     }
@@ -36,4 +36,5 @@ class LeaveDetailDialog(context: Context, private val recordingDetailfragment: c
         windowParams?.height = context.resources.getDimensionPixelSize(R.dimen.custom_dialog_leave_height)
         window?.attributes = windowParams
     }
+
 }

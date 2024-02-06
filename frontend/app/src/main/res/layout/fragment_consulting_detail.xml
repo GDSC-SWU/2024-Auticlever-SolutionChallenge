@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presenter.recordingdetail.RecordingDetailFragment">
+    tools:context=".presenter.consultingdetail.ConsultingDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -107,7 +108,8 @@
                 android:background="@android:color/transparent"
                 android:lineSpacingExtra="2dp"
                 android:padding="0dp"
-                android:text="@string/title_eng_keyword"
+                android:hint="Enter the subject"
+                android:textColorHint="@color/gray5"
                 android:textAppearance="@font/font_pretendard_semibold"
                 android:textColor="@color/black"
                 android:textSize="24dp"
@@ -154,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginTop="4dp"
-                android:background="@drawable/main_rv_round"
+                android:background="@drawable/consult_detail_memo2"
                 android:backgroundTint="@color/gray6"
                 android:paddingVertical="13dp"
                 android:paddingStart="20dp"
@@ -282,7 +284,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_main_memo" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/ib_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -317,15 +319,109 @@
         android:layout_marginBottom="72dp"
         android:background="@drawable/consult_detail_upload_btn"
         android:drawableLeft="@drawable/consult_detail_upload"
+        android:drawablePadding="10dp"
         android:fontFamily="@font/font_pretendard_regular"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         android:text="Upload a recording file"
         android:textAllCaps="false"
+        android:textSize="12sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/iv_upload_background"
         app:layout_constraintEnd_toEndOf="@id/iv_upload_background"
         app:layout_constraintStart_toStartOf="@id/iv_upload_background"
         app:layout_constraintTop_toTopOf="@id/iv_upload_background" />
+
+    <View
+        android:id="@+id/bottom_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:visibility="gone"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView_memo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/start_time"
+        android:textAppearance="@font/font_pretendard_regular"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
+        app:layout_constraintStart_toStartOf="@+id/bottom_appbar"/>
+
+    <TextView
+        android:id="@+id/tv_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/end_time"
+        android:textAppearance="@font/font_pretendard_regular"
+        android:textSize="12sp"
+        android:textColor="@color/gray3"
+        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
+
+    <ImageButton
+        android:id="@+id/btn_timeago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginStart="91dp"
+        android:src="@drawable/ic_timeago"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
+        app:layout_constraintStart_toStartOf="@+id/bottom_appbar"/>
+
+    <ImageButton
+        android:id="@+id/btn_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:src="@drawable/ic_play"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
+        app:layout_constraintStart_toStartOf="@+id/bottom_appbar"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
+
+    <ImageButton
+        android:id="@+id/btn_timelater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="91dp"
+        android:src="@drawable/ic_timelater"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
+
+    <ScrollView
+        android:id="@+id/scrollView_memo"
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/et_bottom_memo"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:paddingVertical="7dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/memo"
+            android:textAppearance="@font/font_pretendard_regular"
+            android:textSize="14sp"
+            android:lineSpacingExtra="6dp"
+            android:background="@color/gray6" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
