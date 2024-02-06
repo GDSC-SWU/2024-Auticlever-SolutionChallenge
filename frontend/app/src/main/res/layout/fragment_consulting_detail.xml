@@ -293,44 +293,45 @@
                 app:layout_constraintStart_toEndOf="@id/tv_main_title"
                 app:layout_constraintTop_toTopOf="@id/tv_main_memo" />
 
+            <ImageView
+                android:id="@+id/iv_upload_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/consult_detail_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_memo" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_consult_detail_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="74dp"
+                android:layout_marginTop="73dp"
+                android:layout_marginEnd="73dp"
+                android:layout_marginBottom="72dp"
+                android:background="@drawable/consult_detail_upload_btn"
+                android:drawableLeft="@drawable/consult_detail_upload"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/font_pretendard_regular"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="Upload a recording file"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/iv_upload_background"
+                app:layout_constraintEnd_toEndOf="@id/iv_upload_background"
+                app:layout_constraintStart_toStartOf="@id/iv_upload_background"
+                app:layout_constraintTop_toTopOf="@id/iv_upload_background" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/iv_upload_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/consult_detail_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_consult_detail_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="73dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginBottom="72dp"
-        android:background="@drawable/consult_detail_upload_btn"
-        android:drawableLeft="@drawable/consult_detail_upload"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/font_pretendard_regular"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        android:text="Upload a recording file"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/iv_upload_background"
-        app:layout_constraintEnd_toEndOf="@id/iv_upload_background"
-        app:layout_constraintStart_toStartOf="@id/iv_upload_background"
-        app:layout_constraintTop_toTopOf="@id/iv_upload_background" />
 
     <View
         android:id="@+id/bottom_appbar"
