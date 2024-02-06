@@ -4,4 +4,5 @@
     <dimen name="custom_dialog_height">172dp</dimen>
     <dimen name="custom_dialog_leave_height">189dp</dimen>
     <dimen name="custom_dialog_tip_height">223dp</dimen>
+    <dimen name="custom_dialog_exit_height">223dp</dimen>
 </resources>

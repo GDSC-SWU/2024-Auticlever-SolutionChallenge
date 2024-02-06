@@ -1,10 +1,13 @@
 package com.example.auticlever.presenter.recordloading
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.TextView
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.auticlever.R
@@ -32,12 +35,17 @@ class RecordLoadingFragment : Fragment() {
 
         response = binding.tvResponse
         response.setOnClickListener{
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id, RecordingDetailFragment())
-                .commit()
+            ExitDialog()
         }
 
         return binding.root
+    }
+
+    private fun ExitDialog() {
+        val ExitDialog = ExitDialog(requireContext(), this)
+        ExitDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        ExitDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        ExitDialog.show()
     }
 
 }

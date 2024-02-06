@@ -81,11 +81,11 @@ class RecordingDetailFragment : Fragment() {
     }
 
     private fun LeaveDialog() {
-        val SaveDialog =
+        val LeaveDialog =
             com.example.auticlever.presenter.recordingdetail.LeaveDetailDialog(requireContext(), this)
-        SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        SaveDialog.show()
+        LeaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        LeaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        LeaveDialog.show()
     }
 
     private fun CheckPinning() {
