@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
+import com.example.auticlever.presenter.consultloading.ConsultLoadingFragment
 import com.example.auticlever.presenter.main.MainFragment
 
 class ConsultingDetailFragment : Fragment() {
@@ -94,6 +95,12 @@ class ConsultingDetailFragment : Fragment() {
     fun goMain() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, MainFragment())
+            .commit()
+    }
+
+    fun goLoading(){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ConsultLoadingFragment())
             .commit()
     }
 

@@ -1,4 +1,4 @@
-package com.example.auticlever.presenter.consultingdetail
+package com.example.auticlever.presenter.consultloading
 
 import android.app.Dialog
 import android.content.Context
@@ -6,18 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
 import com.example.auticlever.R
-import com.example.auticlever.databinding.DialogRecordingDetailSaveBinding
+import com.example.auticlever.databinding.DialogLoadingErrorBinding
 
-
-class SaveDetailDialog(context: Context, private val consultingDetailfragment: com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragment) : Dialog(context) {
-    private lateinit var binding : DialogRecordingDetailSaveBinding
+class ErrorDialog(context: Context, private val recordingLoadingfragment: com.example.auticlever.presenter.recordloading.RecordLoadingFragment) : Dialog(context) {
+    private lateinit var binding : DialogLoadingErrorBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setCancelable(false)
 
-        binding = DialogRecordingDetailSaveBinding.inflate(LayoutInflater.from(context))
+        binding = DialogLoadingErrorBinding.inflate(LayoutInflater.from(context))
         setContentView(binding.root)
 
         windowSize()
@@ -25,8 +24,7 @@ class SaveDetailDialog(context: Context, private val consultingDetailfragment: c
         binding.btnCancle.setOnClickListener {
             dismiss() // 다이얼로그 닫기
         }
-        binding.btnSave.setOnClickListener{
-            consultingDetailfragment.goLoading()
+        binding.btnRetry.setOnClickListener{
             dismiss()
         }
     }
