@@ -138,6 +138,7 @@ class RecordingFragment : Fragment() {
                     start()
                     recordingStartTime = SystemClock.elapsedRealtime()
                     handler.postDelayed(recordingRunnable, 100)
+                    soundVisualizerView.clearVisualization()
                     soundVisualizerView.startVisualizing(false)
                     isRecording = true
                     binding.ibRecording.setBackgroundResource(R.drawable.recording_stop)

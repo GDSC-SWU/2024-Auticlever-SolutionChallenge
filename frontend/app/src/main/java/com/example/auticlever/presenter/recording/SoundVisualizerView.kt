@@ -102,6 +102,11 @@ class SoundVisualizerView(
         handler?.removeCallbacks(visualizeRepeatAction)
     }
 
+    fun clearVisualization() {
+        drawingAmplitudes = emptyList()
+        invalidate()
+    }
+
 
     companion object {
         private const val LINE_WIDTH = 3F
