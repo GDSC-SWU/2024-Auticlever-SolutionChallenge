@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presenter.recordingdetail.RecordingDetailFragment">
+    tools:context=".presenter.consultingdetail.ConsultingDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -107,7 +108,8 @@
                 android:background="@android:color/transparent"
                 android:lineSpacingExtra="2dp"
                 android:padding="0dp"
-                android:text="@string/title_eng_keyword"
+                android:hint="Enter the subject"
+                android:textColorHint="@color/gray5"
                 android:textAppearance="@font/font_pretendard_semibold"
                 android:textColor="@color/black"
                 android:textSize="24dp"
@@ -317,11 +319,13 @@
         android:layout_marginBottom="72dp"
         android:background="@drawable/consult_detail_upload_btn"
         android:drawableLeft="@drawable/consult_detail_upload"
+        android:drawablePadding="10dp"
         android:fontFamily="@font/font_pretendard_regular"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
         android:text="Upload a recording file"
         android:textAllCaps="false"
+        android:textSize="12sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/iv_upload_background"
         app:layout_constraintEnd_toEndOf="@id/iv_upload_background"

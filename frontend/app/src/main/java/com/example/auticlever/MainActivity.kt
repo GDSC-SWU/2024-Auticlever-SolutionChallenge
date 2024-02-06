@@ -4,6 +4,9 @@ import android.R
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.auticlever.databinding.ActivityMainBinding
+import com.example.auticlever.databinding.FragmentConsultingDetailBinding
+import com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragment
+import com.example.auticlever.presenter.consultinglist.ConsultingListFragment
 import com.example.auticlever.presenter.main.MainFragment
 
 
@@ -25,4 +28,24 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
+    // 원하는 프래그먼트로 이동해주는 함수. 필요시 index추가
+    /*
+    fun changeFragment(index: Int){
+        when(index){
+            //상담상세페이지로 이동
+            1 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.fragmentContainer.id, ConsultingDetailFragment())
+                    .commit()
+            }
+            //상담리스트로 이동
+            2 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(binding.fragmentContainer.id, ConsultingListFragment())
+                    .commit()
+            }
+        }
+    }*/
 }

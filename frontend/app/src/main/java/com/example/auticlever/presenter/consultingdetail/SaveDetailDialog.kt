@@ -26,7 +26,6 @@ class SaveDetailDialog(context: Context, private val consultingDetailfragment: c
             dismiss() // 다이얼로그 닫기
         }
         binding.btnSave.setOnClickListener{
-            consultingDetailfragment.fragmentremove()
             dismiss()
         }
     }

@@ -25,7 +25,6 @@ class DeleteDetailDialog(context: Context, private val consultingDetailfragment:
             dismiss() // 다이얼로그 닫기
         }
         binding.btnDelete.setOnClickListener {
-            consultingDetailfragment.fragmentremove()
             dismiss()
         }
     }

@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
@@ -20,7 +19,6 @@ import com.example.auticlever.presenter.main.MainFragment
 
 class ConsultingDetailFragment : Fragment() {
     lateinit var binding : FragmentConsultingDetailBinding
-    lateinit var callback: OnBackPressedCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,6 +53,15 @@ class ConsultingDetailFragment : Fragment() {
         binding.checkPinning.setOnClickListener{
             CheckPinning()
         }
+
+        binding.ivUploadBackground.setOnClickListener{
+            ClickUploadFile()
+        }
+
+        binding.btnConsultDetailUpload.setOnClickListener {
+            ClickUploadFile()
+        }
+
         MemoSame()
 
         return binding.root
@@ -84,12 +91,12 @@ class ConsultingDetailFragment : Fragment() {
         leaveDialog.show()
     }
 
-    fun fragmentremove() {
-        // 뒤로가기 클릭시 현재 fragment를 삭제
+    fun goMain() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .remove(this)
+            .replace(R.id.fragment_container, MainFragment())
             .commit()
     }
+
 
     private fun KeyboardUp() {
         binding.etTitleKeyword.requestFocus()
@@ -118,6 +125,19 @@ class ConsultingDetailFragment : Fragment() {
             binding.etMemo.visibility  = View.VISIBLE
             binding.scrollViewMemo.visibility = View.GONE
         }
+    }
+
+    private fun ClickUploadFile(){
+        //파일 업로드 버튼과 점선 안보이게하기
+        binding.ivUploadBackground.visibility = View.GONE
+        binding.btnConsultDetailUpload.visibility = View.GONE
+        //재생바,메모,ai본문 및 요약내용 보이게하기
+        binding.bottomAppbar.visibility = View.VISIBLE
+        binding.scrollViewMemo.visibility = View.VISIBLE
+        binding.tvAiSummarizeTitle.visibility = View.VISIBLE
+        binding.tvAiSummarize.visibility = View.VISIBLE
+        binding.tvRecordingContentTitle.visibility = View.VISIBLE
+        binding.tvRecordingContent.visibility = View.VISIBLE
     }
 
     private fun MemoSame() {
