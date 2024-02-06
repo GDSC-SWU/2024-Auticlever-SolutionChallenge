@@ -12,53 +12,53 @@
         android:id="@+id/ib_recording_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/recording_arrow"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="38dp"
         android:background="@android:color/transparent"
         android:paddingTop="2dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="7dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/recording_arrow"
         app:layout_constraintEnd_toStartOf="@+id/tv_delete"
-        tools:ignore="SpeakableTextPresentCheck"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/tv_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
         android:text="@string/delete"
-        android:textColor="@color/systemred"
         android:textAppearance="@font/font_pretendard_regular"
+        android:textColor="@color/systemred"
         android:textSize="14sp"
-        android:layout_marginTop="11dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ib_recording_arrow"/>
+        app:layout_constraintStart_toEndOf="@+id/ib_recording_arrow"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_recording_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
         android:text="@string/recording_time"
-        android:textSize="24sp"
         android:textAppearance="@font/font_pretendard_regular"
         android:textColor="@color/black"
-        android:layout_marginTop="6dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:textColor="@color/black"
-        android:textAppearance="@font/font_pretendard_regular"
-        android:textSize="14sp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="42dp"
         android:layout_marginRight="24dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:text="@string/save"
+        android:textAppearance="@font/font_pretendard_regular"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.example.auticlever.presenter.recording.SoundVisualizerView
         android:id="@+id/view_recording"

@@ -9,6 +9,6 @@
         android:startColor="#FFF8B9"
         android:type="radial"
         android:centerX="0.6"
-        android:centerY="0.2"/>
+        android:centerY="0.25"/>
 
 </shape>

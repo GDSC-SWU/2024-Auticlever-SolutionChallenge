@@ -16,19 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="14dp"
-            android:layout_marginTop="24dp"
             android:background="@drawable/main_rv_round"
             android:paddingLeft="20dp"
             android:paddingTop="13dp"
             android:paddingRight="16dp"
             android:paddingBottom="20dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/item_main_consult"
-            tools:itemCount="4"/>
+            app:spanCount="1"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_main_consult" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_conversation"

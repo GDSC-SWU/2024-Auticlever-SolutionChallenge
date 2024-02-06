@@ -2,6 +2,7 @@ package com.example.auticlever
 
 import android.R
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.auticlever.databinding.ActivityMainBinding
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
                 .add(binding.fragmentContainer.id, MainFragment())
                 .commit()
         }
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
     // 원하는 프래그먼트로 이동해주는 함수. 필요시 index추가
     /*
