@@ -25,6 +25,12 @@
     <string name="dialog_both_delete_text">Both the recording and the note content will be deleted.</string>
     <string name="dialog_tip_title">What is \'Main memo\'?</string>
     <string name="dialog_tip_text">These are notes that you can see at the top of the home screen. \nYou can access and edit them from any consultation page. Write down to-dos or important insights! </string>
+    <string name="dialog_error_title">Error: 404</string>
+    <string name="dialog_error_text">There was an error, do you want to try again?</string>
+    <string name="retry">Retry</string>
+    <string name="dialog_exit_title">Do you want to exit the app?</string>
+    <string name="dialog_exit_text">If there is no response, you should exit the app to stop the transfer processing. Note, however, that this will not save anything that was recorded.</string>
+    <string name="exit">Exit</string>
 
     <!-- loading -->
     <string name="transcribing">Transcribing\na recording to text...</string>
