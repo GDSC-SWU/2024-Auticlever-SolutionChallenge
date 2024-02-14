@@ -2,24 +2,33 @@ package com.example.auticlever.presenter.recordingdetail
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
+import com.example.auticlever.data.ApiPool
+import com.example.auticlever.data.dto.ConversationData
 import com.example.auticlever.databinding.FragmentRecordingDetailBinding
 import com.example.auticlever.presenter.main.MainFragment
+import retrofit2.Call
+import retrofit2.Response
 
 class RecordingDetailFragment : Fragment() {
 
     lateinit var binding : FragmentRecordingDetailBinding
+    private val getConversationDataService = ApiPool.getConversationData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +42,7 @@ class RecordingDetailFragment : Fragment() {
     ): View? {
         binding = FragmentRecordingDetailBinding.inflate(inflater)
 
+        getConversationDataApi()
 
         binding.tvDelete.setOnClickListener{
             DeleteDialog()
@@ -53,9 +63,21 @@ class RecordingDetailFragment : Fragment() {
         }
 
         MemoSame()
-
+        bottomMemoHeight()
 
         return binding.root
+    }
+
+    fun bottomMemoHeight() {
+        binding.etBottomMemo.post {
+            val editTextHeight = binding.etBottomMemo.height
+            val maxHeight = resources.getDimensionPixelSize(R.dimen.max_edit_text_height)
+            if (editTextHeight > maxHeight) {
+                val layoutParams = binding.etBottomMemo.layoutParams
+                layoutParams.height = maxHeight
+                binding.etBottomMemo.layoutParams = layoutParams
+            }
+        }
     }
 
     fun fragmentleave() {
@@ -66,7 +88,7 @@ class RecordingDetailFragment : Fragment() {
 
     private fun DeleteDialog() {
         val DeleteDialog =
-            com.example.auticlever.presenter.recordingdetail.DeleteDetailDialog(requireContext(), this)
+            DeleteDetailDialog(requireContext(), this)
         DeleteDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         DeleteDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         DeleteDialog.show()
@@ -74,7 +96,7 @@ class RecordingDetailFragment : Fragment() {
 
     private fun SaveDialog() {
         val SaveDialog =
-            com.example.auticlever.presenter.recordingdetail.SaveDetailDialog(requireContext(), this)
+            SaveDetailDialog(requireContext(), this)
         SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         SaveDialog.show()
@@ -82,7 +104,7 @@ class RecordingDetailFragment : Fragment() {
 
     private fun LeaveDialog() {
         val LeaveDialog =
-            com.example.auticlever.presenter.recordingdetail.LeaveDetailDialog(requireContext(), this)
+            LeaveDetailDialog(requireContext(), this)
         LeaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         LeaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         LeaveDialog.show()
@@ -136,4 +158,28 @@ class RecordingDetailFragment : Fragment() {
         })
     }
 
+
+
+    private fun getConversationDataApi() {
+        getConversationDataService.getConversationData(2).enqueue(object : retrofit2.Callback<ConversationData> {
+            override fun onResponse(
+                call: Call<ConversationData>, response: Response<ConversationData>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        binding.etTitleKeyword.text = Editable.Factory.getInstance().newEditable(it.conversation_data.keyword)
+                        binding.tvAiSummarize.text = it.conversation_data.summary
+                        binding.tvRecordingContent.text = it.conversation_data.content
+                        binding.tvDate.text = it.conversation_data.date
+                        binding.etMemo.text = Editable.Factory.getInstance().newEditable(it.cvMemo_data.firstOrNull()?.content)
+                    }
+                } else {
+                    Log.d("error", "실패한 응답")
+                }
+            }
+            override fun onFailure(call: Call<ConversationData>, t: Throwable) {
+                t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
+            }
+        })
+    }
 }

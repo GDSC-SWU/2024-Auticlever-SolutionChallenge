@@ -5,4 +5,5 @@
     <dimen name="custom_dialog_leave_height">189dp</dimen>
     <dimen name="custom_dialog_tip_height">223dp</dimen>
     <dimen name="custom_dialog_exit_height">223dp</dimen>
+    <dimen name="max_edit_text_height">102dp</dimen>
 </resources>

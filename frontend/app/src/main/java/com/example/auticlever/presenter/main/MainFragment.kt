@@ -11,6 +11,7 @@ import com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragmen
 import com.example.auticlever.presenter.consultinglist.ConsultingListFragment
 import com.example.auticlever.presenter.recording.ConsultationFragment
 import com.example.auticlever.presenter.recording.RecordingFragment
+import com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment
 
 
 class MainFragment : Fragment() {
@@ -50,6 +51,12 @@ class MainFragment : Fragment() {
         binding.btnConsultAdd.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(binding.fragmentContainer.id, ConsultingDetailFragment())
+                .commit()
+        }
+
+        binding.tvConversation.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, RecordingDetailFragment())
                 .commit()
         }
 

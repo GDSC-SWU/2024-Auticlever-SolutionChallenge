@@ -338,7 +338,7 @@
     <ScrollView
         android:id="@+id/scrollView_memo"
         android:layout_width="match_parent"
-        android:layout_height="102dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -347,7 +347,7 @@
         <EditText
             android:id="@+id/et_bottom_memo"
             android:layout_width="match_parent"
-            android:layout_height="102dp"
+            android:layout_height="wrap_content"
             android:paddingVertical="7dp"
             android:paddingHorizontal="20dp"
             android:text="@string/memo"
