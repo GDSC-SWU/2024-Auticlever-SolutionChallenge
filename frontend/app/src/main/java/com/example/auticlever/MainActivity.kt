@@ -33,24 +33,5 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
-    // 원하는 프래그먼트로 이동해주는 함수. 필요시 index추가
-    /*
-    fun changeFragment(index: Int){
-        when(index){
-            //상담상세페이지로 이동
-            1 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(binding.fragmentContainer.id, ConsultingDetailFragment())
-                    .commit()
-            }
-            //상담리스트로 이동
-            2 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(binding.fragmentContainer.id, ConsultingListFragment())
-                    .commit()
-            }
-        }
-    }*/
+
 }
