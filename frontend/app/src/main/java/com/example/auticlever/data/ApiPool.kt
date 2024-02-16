@@ -1,6 +1,8 @@
 package com.example.auticlever.data
 
 import com.example.auticlever.data.api.ConversationDataApiService
+import com.example.auticlever.data.api.ConversationFileApiService
+import com.example.auticlever.data.api.ConversationListApiService
 import com.example.auticlever.data.api.KeywordsApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -9,6 +11,8 @@ import retrofit2.Retrofit
 
 object ApiPool {
     val getConversationData = RetrofitPool.retrofit.create(ConversationDataApiService::class.java)
+    val getConversationFile = RetrofitPool.retrofit.create(ConversationFileApiService::class.java)
+    val getConversationList = RetrofitPool.retrofit.create(ConversationListApiService::class.java)
     val getKeywords = RetrofitPool.retrofit.create(KeywordsApiService::class.java)
 }
 

@@ -59,7 +59,6 @@ class KeywordsFragment : Fragment() {
                     binding.rvKeywords.adapter = adapter
 
                     response.body()?.let {
-                        Log.d("result", it.toString())
                         adapter.submitList(it.recommended_keywords)
                     }
                 } else {

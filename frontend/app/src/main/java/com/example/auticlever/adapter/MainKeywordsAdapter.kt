@@ -6,20 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.auticlever.databinding.ItemRecordingKeywordsBinding
+import com.example.auticlever.databinding.ItemMainKeywordBinding
 
-class KeywordsAdapter :
-    ListAdapter<String, KeywordsAdapter.KeywordsViewHolder>(KeywordsDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KeywordsViewHolder {
-        val binding = ItemRecordingKeywordsBinding.inflate(
+class MainKeywordsAdapter :
+    ListAdapter<String, MainKeywordsAdapter.MainKeywordsViewHolder>(MainKeywordsDiffCallback()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainKeywordsViewHolder {
+        val binding = ItemMainKeywordBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return KeywordsViewHolder(binding)
+        return MainKeywordsViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: KeywordsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MainKeywordsViewHolder, position: Int) {
         if (currentList.isEmpty()) {
             // 데이터가 없는 경우, 빈 상태를 표시
             holder.showEmptyState()
@@ -29,10 +29,10 @@ class KeywordsAdapter :
         }
     }
 
-    class KeywordsViewHolder(private val binding: ItemRecordingKeywordsBinding) :
+    class MainKeywordsViewHolder(private val binding: ItemMainKeywordBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recommendedKeywords: String) {
-            binding.tvRecordingKeywords.text = recommendedKeywords
+            binding.tvKeyword.text = recommendedKeywords
         }
 
         fun showEmptyState() {
@@ -41,7 +41,7 @@ class KeywordsAdapter :
     }
 }
 
-class KeywordsDiffCallback : DiffUtil.ItemCallback<String>() {
+class MainKeywordsDiffCallback : DiffUtil.ItemCallback<String>() {
     override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
         return oldItem == newItem
     }
