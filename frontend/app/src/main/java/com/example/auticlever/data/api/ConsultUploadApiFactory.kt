@@ -1,11 +1,14 @@
 package com.example.auticlever.data.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.create
+import java.util.concurrent.TimeUnit
 
 object ConsultUploadApiFactory {
     private const val BASE_URL = "http://34.47.76.246:8000/"
@@ -16,6 +19,9 @@ object ConsultUploadApiFactory {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
             .build()
 
         val retrofit = Retrofit.Builder()
@@ -27,3 +33,5 @@ object ConsultUploadApiFactory {
         return retrofit.create(ConsultUploadApiService::class.java)
     }
 }
+
+

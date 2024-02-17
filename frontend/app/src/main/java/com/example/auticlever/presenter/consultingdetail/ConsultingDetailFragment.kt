@@ -7,8 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,19 +23,22 @@ import com.example.auticlever.data.dto.ConsultUploadDto
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
 import com.example.auticlever.presenter.consultloading.ConsultLoadingFragment
 import com.example.auticlever.presenter.main.MainFragment
+import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class ConsultingDetailFragment : Fragment() {
     lateinit var binding: FragmentConsultingDetailBinding
     private val selectMp3FileLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val selectedFileUri = result.data?.data
+                var selectedFileUri = result.data?.data
+                Log.d("FilePicker", "Selected File URI: $selectedFileUri")
                 selectedFileUri?.let { uploadMp3File(it) }
             }
         }
@@ -92,8 +94,8 @@ class ConsultingDetailFragment : Fragment() {
                 requireContext(),
                 this
             )
-        deleteDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        deleteDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        deleteDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        deleteDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         deleteDialog.show()
     }
 
@@ -103,8 +105,8 @@ class ConsultingDetailFragment : Fragment() {
                 requireContext(),
                 this
             )
-        saveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        saveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        saveDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        saveDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         saveDialog.show()
     }
 
@@ -114,8 +116,8 @@ class ConsultingDetailFragment : Fragment() {
                 requireContext(),
                 this
             )
-        leaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        leaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        leaveDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        leaveDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         leaveDialog.show()
     }
 
@@ -144,8 +146,8 @@ class ConsultingDetailFragment : Fragment() {
             requireContext(),
             this
         )
-        tipDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        tipDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        tipDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        tipDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         tipDialog.show()
 
     }
@@ -175,6 +177,14 @@ class ConsultingDetailFragment : Fragment() {
     }
 
     private fun clickUploadFile() {
+
+        // 파일 선택 Intent 시작
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "audio/*"
+        }
+        selectMp3FileLauncher.launch(intent)
+
         //파일 업로드 버튼과 점선 안보이게하기
         binding.ivUploadBackground.visibility = View.GONE
         binding.btnConsultDetailUpload.visibility = View.GONE
@@ -185,47 +195,60 @@ class ConsultingDetailFragment : Fragment() {
         binding.tvAiSummarize.visibility = View.VISIBLE
         binding.tvRecordingContentTitle.visibility = View.VISIBLE
         binding.tvRecordingContent.visibility = View.VISIBLE
-
-        // 파일 선택 Intent 시작
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "audio/mpeg" // mp3 파일 형식에 따라 변경
-        }
-        selectMp3FileLauncher.launch(intent)
     }
-
+    private fun getFileName(uri: Uri): String {
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+        cursor?.let {
+            it.moveToFirst()
+            val columnIndex = it.getColumnIndex(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+            val fileName = it.getString(columnIndex)
+            it.close()
+            return fileName ?: ""
+        } ?: run {
+            return ""
+        }
+    }
     private fun uploadMp3File(fileUri: Uri) {
         val inputStream = requireContext().contentResolver.openInputStream(fileUri)
-        val fileRequestBody = inputStream?.readBytes()?.toRequestBody("audio/mpeg".toMediaTypeOrNull())
+        val fileRequestBody = inputStream?.readBytes()?.toRequestBody("audio/*".toMediaTypeOrNull())
 
         fileRequestBody?.let {
-            val filePart = MultipartBody.Part.createFormData("file", "audio.mp3", it)
+            // 파일 이름 및 확장자를 추출합니다.
+            val fileName = getFileName(fileUri)
+
+            // 파일 파트를 생성합니다.
+            val filePart = MultipartBody.Part.createFormData("file", fileName, fileRequestBody)
 
             // Retrofit을 사용하여 서버에 업로드
             ConsultUploadApiFactory.createConsultUploadApiService().uploadConsultation(filePart)
                 .enqueue(object : Callback<ConsultUploadDto> {
                     override fun onResponse(
-                        call: Call<ConsultUploadDto>,
+                        call: retrofit2.Call<ConsultUploadDto>,
                         response: Response<ConsultUploadDto>
                     ) {
                         if (response.isSuccessful) {
                             val responseBody = response.body()
                             responseBody?.let {
                                 // 서버로부터 받은 요약 내용을 TextView에 대입
-                                Log.d("success","${it.message}")
-                                binding.tvAiSummarize.text = it.message
+                                Log.d("연결 성공", "Message: ${responseBody.message}, Summary: ${responseBody.summary}")
+                                binding.tvAiSummarize.text = responseBody.summary
+
                             }
                         } else {
                             // 서버 응답이 실패한 경우 처리
-                            Log.d("error", "서버 응답 실패")
+                            Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
                         }
                     }
 
-                    override fun onFailure(call: Call<ConsultUploadDto>, t: Throwable) {
-                        // 네트워크 오류 또는 예외 발생 시 처리
-                        Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
+                    override fun onFailure(call: retrofit2.Call<ConsultUploadDto>, t: Throwable) {
+                        if (call.isCanceled) {
+                            Log.d("error", "서버 요청 취소")
+                        } else {
+                            // 네트워크 오류 또는 예외 발생 시 처리
+                            Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
+                        }
                     }
                 })
         }
-
-}}
+    }
+}
