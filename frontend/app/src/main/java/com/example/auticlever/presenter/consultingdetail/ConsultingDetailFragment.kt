@@ -213,10 +213,10 @@ class ConsultingDetailFragment : Fragment() {
         val fileRequestBody = inputStream?.readBytes()?.toRequestBody("audio/*".toMediaTypeOrNull())
 
         fileRequestBody?.let {
-            // 파일 이름 및 확장자를 추출합니다.
+            // 파일 이름 및 확장자를 추출
             val fileName = getFileName(fileUri)
 
-            // 파일 파트를 생성합니다.
+            // 파일 파트를 생성
             val filePart = MultipartBody.Part.createFormData("file", fileName, fileRequestBody)
 
             // Retrofit을 사용하여 서버에 업로드
@@ -235,7 +235,7 @@ class ConsultingDetailFragment : Fragment() {
 
                             }
                         } else {
-                            // 서버 응답이 실패한 경우 처리
+                            // 서버 응답이 실패
                             Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
                         }
                     }
