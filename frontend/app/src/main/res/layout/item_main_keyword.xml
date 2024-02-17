@@ -6,8 +6,8 @@
     android:paddingRight="10dp"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_keyword"
+    <TextView
+        android:id="@+id/tv_keyword"
         android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:layout_marginTop="12dp"
