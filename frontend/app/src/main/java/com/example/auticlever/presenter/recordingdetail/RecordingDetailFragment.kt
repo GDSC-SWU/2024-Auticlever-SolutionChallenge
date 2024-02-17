@@ -1,9 +1,7 @@
 package com.example.auticlever.presenter.recordingdetail
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -15,22 +13,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.view.Window
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import com.example.auticlever.R
 import com.example.auticlever.data.ApiPool
 import com.example.auticlever.data.dto.ConversationData
 import com.example.auticlever.databinding.FragmentRecordingDetailBinding
 import com.example.auticlever.presenter.main.MainFragment
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -41,6 +36,7 @@ class RecordingDetailFragment : Fragment() {
 
     lateinit var binding : FragmentRecordingDetailBinding
     private lateinit var mediaPlayer: MediaPlayer
+    private var playbackPosition: Int = 0
     private val getConversationDataService = ApiPool.getConversationData
     private val getConversationFileService = ApiPool.getConversationFile
 
@@ -57,6 +53,7 @@ class RecordingDetailFragment : Fragment() {
         binding = FragmentRecordingDetailBinding.inflate(inflater)
 
         getConversationDataApi()
+        playFile()
 
         binding.tvDelete.setOnClickListener{
             DeleteDialog()
@@ -77,7 +74,7 @@ class RecordingDetailFragment : Fragment() {
         }
 
         binding.checkPlay.setOnClickListener{
-            CheckPlaying()
+            CheckPlaying(mediaPlayer)
         }
 
         MemoSame()
@@ -130,12 +127,13 @@ class RecordingDetailFragment : Fragment() {
         }
     }
 
-    private fun CheckPlaying() {
+    private fun CheckPlaying(mediaPlayer: MediaPlayer) {
         if (binding.checkPlay.isChecked) {
-
-        }
-        else {
-            //playFile()
+            mediaPlayer.seekTo(playbackPosition)
+            mediaPlayer.start()
+        } else {
+            mediaPlayer.pause()
+            playbackPosition = mediaPlayer.currentPosition
         }
     }
 
@@ -149,114 +147,104 @@ class RecordingDetailFragment : Fragment() {
     private fun MemoSame() {
         binding.etMemo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.etBottomMemo.text.toString() != s.toString()) {
                     binding.etBottomMemo.setText(s)
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 
         binding.etBottomMemo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.etMemo.text.toString() != s.toString()) {
                     binding.etMemo.setText(s)
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
     }
 
 
-
-    private fun getConversationDataApi() {
-        val conversationId = arguments?.getInt("conversationId", -1) ?: -1
-
-        if (conversationId != null) {
-            getConversationDataService.getConversationData(conversationId).enqueue(object : retrofit2.Callback<ConversationData> {
-                override fun onResponse(
-                    call: Call<ConversationData>, response: Response<ConversationData>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            if (it.cvMemo_data.firstOrNull()?.content != null) {
-                                binding.etMemo.text = Editable.Factory.getInstance().newEditable(it.cvMemo_data.firstOrNull()?.content)
-                            } else {
-                                binding.etMemo.hint = resources.getString(R.string.none_memo)
-                                binding.etBottomMemo.hint = resources.getString(R.string.none_memo)
-                            }
-                            binding.etTitleKeyword.text = Editable.Factory.getInstance().newEditable(it.conversation_data.keyword)
-                            binding.tvAiSummarize.text = it.conversation_data.summary
-                            binding.tvRecordingContent.text = it.conversation_data.content
-                            binding.tvDate.text = it.conversation_data.date
-                        }
-                    } else {
-                        Log.d("error", "실패한 응답")
-                    }
-                }
-
-                override fun onFailure(call: Call<ConversationData>, t: Throwable) {
-                    t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
-                }
-            })
-        }
-        else {
-            Log.d("error", "ID가 널 값")
-        }
-    }
-
     private fun createMP3File(inputStream: InputStream): File {
-        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        if (!downloadDir.exists()) {
-            downloadDir.mkdirs()
-        }
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val mp3File = File(downloadDir, "recording_${timeStamp}.mp3")
-//        mp3File.outputStream().use { fileOut ->
-//            inputStream.use { input ->
-//                input.copyTo(fileOut)
-//            }
-//        }
+        val mp3File = File(context?.cacheDir, "recording_${timeStamp}.mp3")
+        mp3File.outputStream().use { fileOut ->
+            inputStream.use { input ->
+                input.copyTo(fileOut)
+            }
+        }
+        Log.d("FileCreation", "MP3 파일이 생성되었습니다. 경로: ${mp3File.absolutePath}")
+
         return mp3File
     }
 
     private fun playFile() {
         val conversationId = arguments?.getInt("conversationId", -1) ?: -1
-        if (conversationId != null) {
-            val call = getConversationFileService.getConversationFile(conversationId)
-
-            call.enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        if (conversationId != -1) {
+            GlobalScope.launch(Dispatchers.IO) {
+                try {
+                    val response = getConversationFileService.getConversationFile(conversationId).execute()
                     if (response.isSuccessful) {
                         val mp3Data = response.body()?.byteStream()
                         mp3Data?.let {
                             val file = createMP3File(it)
                             mediaPlayer = MediaPlayer().apply {
                                 setDataSource(file.path)
-                                prepareAsync()
-                                setOnPreparedListener {
-                                    start()
-                                }
+                                prepare()
                             }
                         }
                     } else {
                         Log.d("error", "실패한 응답")
                     }
+                } catch (e: Exception) {
+                    Log.e("error", "네트워크 호출 오류: ${e.message}")
                 }
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
-                }
-            })
+            }
         }
+    }
+
+
+    private fun getConversationDataApi() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                // 대화 데이터 가져오기
+                val conversationData = getConversationData()
+
+                // 대화 데이터를 UI에 설정
+                setupConversationData(conversationData)
+            } catch (e: Exception) {
+                Log.e("Error", "Failed to load data: ${e.message}")
+            }
+        }
+    }
+
+    private suspend fun getConversationData(): ConversationData {
+        val conversationId = arguments?.getInt("conversationId", -1) ?: -1
+        return withContext(Dispatchers.IO) {
+            getConversationDataService.getConversationData(conversationId).execute().body()!!
+        }
+    }
+
+    private fun setupConversationData(conversationData: ConversationData) {
+        if (conversationData.cvMemo_data.firstOrNull()?.content != null) {
+            binding.etMemo.text = Editable.Factory.getInstance().newEditable(conversationData.cvMemo_data.firstOrNull()?.content)
+        } else {
+            binding.etMemo.hint = resources.getString(R.string.none_memo)
+            binding.etBottomMemo.hint = resources.getString(R.string.none_memo)
+        }
+        binding.etTitleKeyword.text = Editable.Factory.getInstance().newEditable(conversationData.conversation_data.keyword)
+        binding.tvAiSummarize.text = conversationData.conversation_data.summary
+        binding.tvRecordingContent.text = conversationData.conversation_data.content
+        binding.tvDate.text = conversationData.conversation_data.date
+
+        //playFile()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        mediaPlayer.stop()
         mediaPlayer.release()
     }
 }
