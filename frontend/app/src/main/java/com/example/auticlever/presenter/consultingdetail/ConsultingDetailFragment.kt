@@ -175,7 +175,7 @@ class ConsultingDetailFragment : Fragment() {
             binding.scrollViewMemo.visibility = View.GONE
         }
     }
-
+    // 파일 업로드 인텐트 함수
     private fun clickUploadFile() {
 
         // 파일 선택 Intent 시작
