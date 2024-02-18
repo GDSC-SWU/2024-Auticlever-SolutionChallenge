@@ -18,19 +18,20 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
+import com.example.auticlever.data.api.ConsultCsMemoApiFactory
 import com.example.auticlever.data.api.ConsultUploadApiFactory
+import com.example.auticlever.data.dto.ConsultCsMemoRequestDto
+import com.example.auticlever.data.dto.ConsultCsMemoResponseDto
 import com.example.auticlever.data.dto.ConsultUploadDto
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
 import com.example.auticlever.presenter.consultloading.ConsultLoadingFragment
 import com.example.auticlever.presenter.main.MainFragment
-import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class ConsultingDetailFragment : Fragment() {
     lateinit var binding: FragmentConsultingDetailBinding
@@ -42,6 +43,7 @@ class ConsultingDetailFragment : Fragment() {
                 selectedFileUri?.let { uploadMp3File(it) }
             }
         }
+    private var consultationId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -113,9 +115,7 @@ class ConsultingDetailFragment : Fragment() {
     private fun leaveDialog() {
         val leaveDialog =
             com.example.auticlever.presenter.consultingdetail.LeaveDetailDialog(
-                requireContext(),
-                this
-            )
+                requireContext(), this)
         leaveDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         leaveDialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         leaveDialog.show()
@@ -127,21 +127,44 @@ class ConsultingDetailFragment : Fragment() {
             .commit()
     }
 
-    fun goLoading() {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, ConsultLoadingFragment())
-            .commit()
+    private fun goLoading() {
+        val loadingFragment = requireActivity().supportFragmentManager.findFragmentByTag("ConsultLoadingFragment")
+        if (loadingFragment == null) {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, ConsultLoadingFragment(), "ConsultLoadingFragment")
+                .commit()
+        }
+    }
+    private fun showContents(){
+        //파일 업로드 버튼과 점선 안보이게하기
+        binding.ivUploadBackground.visibility = View.GONE
+        binding.btnConsultDetailUpload.visibility = View.GONE
+        //재생바,메모,ai본문 및 요약내용 보이게하기
+        binding.bottomAppbar.visibility = View.VISIBLE
+        binding.scrollViewMemo.visibility = View.VISIBLE
+        binding.tvAiSummarizeTitle.visibility = View.VISIBLE
+        binding.tvAiSummarize.visibility = View.VISIBLE
+        binding.tvRecordingContentTitle.visibility = View.VISIBLE
+        binding.tvRecordingContent.visibility = View.VISIBLE
+    }
+    private fun outLoading(){
+        val loadingFragment = requireActivity().supportFragmentManager.findFragmentByTag("ConsultLoadingFragment")
+        loadingFragment?.let {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .remove(it)
+                .commit()
+        }
     }
 
 
-    private fun keyboardUp() {
+     private fun keyboardUp() {
         binding.etTitleKeyword.requestFocus()
 
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(binding.etTitleKeyword, InputMethodManager.SHOW_IMPLICIT)
     }
 
-    private fun tipDialog() {
+     private fun tipDialog() {
         val tipDialog = com.example.auticlever.presenter.consultingdetail.TipDetailDialog(
             requireContext(),
             this
@@ -152,7 +175,7 @@ class ConsultingDetailFragment : Fragment() {
 
     }
 
-    private fun checkPinning() {
+   private fun checkPinning() {
         if (binding.checkPinning.isChecked) {
             binding.checkPinning.setText(R.string.unpinning)
             binding.checkPinning.setTextColor(
@@ -176,7 +199,96 @@ class ConsultingDetailFragment : Fragment() {
         }
     }
 
-    private fun clickUploadFile() {
+    //처음값 저장
+     private fun setConsultationDetails(title: String, mainMemo: String, csMemo: String) {
+        binding.etTitleKeyword.setText(title)
+        binding.tvMainMemo.text = mainMemo
+        binding.etMemo.setText(csMemo)
+    }
+
+    // 수정값 저장하기
+   /* fun updateConsultationDetails() {
+        val title = binding.etTitleKeyword.text.toString()
+        val csMemo = binding.etMemo.text.toString()
+        val mainMemo = binding.tvMainMemo.text.toString()
+
+        if (consultationId != null) {
+            val requestDto = ConsultCsMemoRequestDto(title, csMemo, mainMemo)
+            ConsultCsMemoApiFactory.consultCsMemoApiService.sendConsultCsMemoData(consultationId, requestDto)
+                .enqueue(object : Callback<ConsultCsMemoResponseDto> {
+                    override fun onResponse(
+                        call: Call<ConsultCsMemoResponseDto>,
+                        response: Response<ConsultCsMemoResponseDto>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            responseBody?.let {
+                                Log.d("작성 및 수정 성공", "csMemo Message: ${it.csMemoMessage}, mainMemo Message: ${it.mainMemoMessage}")
+                            }
+                        } else {
+                            // Handle the case where the server response is not successful
+                            Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<ConsultCsMemoResponseDto>,
+                        t: Throwable
+                    ) {
+                        if (call.isCanceled) {
+                            // Handle the case where the server request is canceled
+                            Log.d("error", "서버 요청 취소")
+                        } else {
+                            // Handle network error or exception
+                            Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
+                        }
+                    }
+                })
+        }
+        // consultationId가 null이면 별도의 처리가 필요한 경우 여기에 추가하세요
+    }
+    // 존재하는 값 가져오기
+    private fun loadConsultationDetails() {
+        // consultationId가 null이 아닌 경우에만 서버 요청을 수행
+        if (consultationId != null) {
+            ConsultCsMemoApiFactory.consultCsMemoApiService.getConsultationDetails(consultationId)
+                .enqueue(object : Callback<ConsultCsMemoRequestDto> {
+                    override fun onResponse(
+                        call: Call<ConsultCsMemoRequestDto>,
+                        response: Response<ConsultCsMemoRequestDto>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            responseBody?.let {
+                                // 서버 응답이 성공적인 경우
+                                setConsultationDetails(it.title, it.csMemo, it.mainMemo)
+                            }
+                        } else {
+                            // 서버 응답이 실패한 경우
+                            Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<ConsultCsMemoRequestDto>,
+                        t: Throwable
+                    ) {
+                        if (call.isCanceled) {
+                            // 서버 요청이 취소된 경우
+                            Log.d("error", "서버 요청 취소")
+                        } else {
+                            // 네트워크 오류 또는 예외가 발생한 경우
+                            Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
+                        }
+                    }
+                })
+        } else {
+            // consultationId가 null인 경우 에러 메시지 출력
+            Log.e("error", "consultationId is null. Cannot load consultation details.")
+        }
+    }*/
+
+     private fun clickUploadFile() {
 
         // 파일 선택 Intent 시작
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -184,19 +296,9 @@ class ConsultingDetailFragment : Fragment() {
             type = "audio/*"
         }
         selectMp3FileLauncher.launch(intent)
-
-        //파일 업로드 버튼과 점선 안보이게하기
-        binding.ivUploadBackground.visibility = View.GONE
-        binding.btnConsultDetailUpload.visibility = View.GONE
-        //재생바,메모,ai본문 및 요약내용 보이게하기
-        binding.bottomAppbar.visibility = View.VISIBLE
-        binding.scrollViewMemo.visibility = View.VISIBLE
-        binding.tvAiSummarizeTitle.visibility = View.VISIBLE
-        binding.tvAiSummarize.visibility = View.VISIBLE
-        binding.tvRecordingContentTitle.visibility = View.VISIBLE
-        binding.tvRecordingContent.visibility = View.VISIBLE
+        showContents()
     }
-    private fun getFileName(uri: Uri): String {
+     private fun getFileName(uri: Uri): String {
         val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
         cursor?.let {
             it.moveToFirst()
@@ -208,11 +310,12 @@ class ConsultingDetailFragment : Fragment() {
             return ""
         }
     }
-    private fun uploadMp3File(fileUri: Uri) {
+     private fun uploadMp3File(fileUri: Uri) {
         val inputStream = requireContext().contentResolver.openInputStream(fileUri)
         val fileRequestBody = inputStream?.readBytes()?.toRequestBody("audio/*".toMediaTypeOrNull())
 
         fileRequestBody?.let {
+            goLoading()
             // 파일 이름 및 확장자를 추출
             val fileName = getFileName(fileUri)
 
@@ -227,10 +330,12 @@ class ConsultingDetailFragment : Fragment() {
                         response: Response<ConsultUploadDto>
                     ) {
                         if (response.isSuccessful) {
+                            //로딩페이지 나가기
+                            outLoading()
                             val responseBody = response.body()
                             responseBody?.let {
                                 // 서버로부터 받은 요약 내용을 TextView에 대입
-                                Log.d("연결 성공", "Message: ${responseBody.message}, Summary: ${responseBody.summary}")
+                                Log.d("요약 완료", "Message: ${responseBody.message}, Summary: ${responseBody.summary}")
                                 binding.tvAiSummarize.text = responseBody.summary
 
                             }
@@ -249,6 +354,7 @@ class ConsultingDetailFragment : Fragment() {
                         }
                     }
                 })
+
         }
     }
 }
