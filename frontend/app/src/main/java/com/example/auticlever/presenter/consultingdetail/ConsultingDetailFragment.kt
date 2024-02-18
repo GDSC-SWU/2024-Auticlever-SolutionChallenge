@@ -20,12 +20,14 @@ import androidx.core.content.ContextCompat
 import com.example.auticlever.R
 import com.example.auticlever.data.api.ConsultCsMemoApiFactory
 import com.example.auticlever.data.api.ConsultUploadApiFactory
-import com.example.auticlever.data.dto.ConsultCsMemoRequestDto
+import com.example.auticlever.data.dto.ConsultCsMemoDto
 import com.example.auticlever.data.dto.ConsultCsMemoResponseDto
 import com.example.auticlever.data.dto.ConsultUploadDto
+import com.example.auticlever.data.dto.ErrorDto
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
 import com.example.auticlever.presenter.consultloading.ConsultLoadingFragment
 import com.example.auticlever.presenter.main.MainFragment
+import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -200,21 +202,21 @@ class ConsultingDetailFragment : Fragment() {
     }
 
     //처음값 저장
-     private fun setConsultationDetails(title: String, mainMemo: String, csMemo: String) {
+     /*private fun setConsultationDetails(title: String, mainMemo: String, csMemo: String) {
         binding.etTitleKeyword.setText(title)
         binding.tvMainMemo.text = mainMemo
         binding.etMemo.setText(csMemo)
-    }
+    }*/
 
     // 수정값 저장하기
-   /* fun updateConsultationDetails() {
+    fun saveCsMemoDetails() {
+        val consultationId = arguments?.getInt("conversationId", -1) ?: -1
         val title = binding.etTitleKeyword.text.toString()
         val csMemo = binding.etMemo.text.toString()
         val mainMemo = binding.tvMainMemo.text.toString()
 
         if (consultationId != null) {
-            val requestDto = ConsultCsMemoRequestDto(title, csMemo, mainMemo)
-            ConsultCsMemoApiFactory.consultCsMemoApiService.sendConsultCsMemoData(consultationId, requestDto)
+            ConsultCsMemoApiFactory.consultCsMemoApiService.sendConsultCsMemoData(consultationId,title, csMemo, mainMemo)
                 .enqueue(object : Callback<ConsultCsMemoResponseDto> {
                     override fun onResponse(
                         call: Call<ConsultCsMemoResponseDto>,
@@ -228,6 +230,9 @@ class ConsultingDetailFragment : Fragment() {
                         } else {
                             // Handle the case where the server response is not successful
                             Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
+                            // Check if it's a validation error and log the details
+                            val errorBody = response.errorBody()?.string()
+                            Log.d("error", "Error Body: $errorBody")
                         }
                     }
 
@@ -244,11 +249,13 @@ class ConsultingDetailFragment : Fragment() {
                         }
                     }
                 })
+        } else {
+            Log.d("error", "consultationId가 null입니다. 처리가 필요합니다.")
         }
-        // consultationId가 null이면 별도의 처리가 필요한 경우 여기에 추가하세요
     }
+
     // 존재하는 값 가져오기
-    private fun loadConsultationDetails() {
+    /*private fun loadConsultationDetails() {
         // consultationId가 null이 아닌 경우에만 서버 요청을 수행
         if (consultationId != null) {
             ConsultCsMemoApiFactory.consultCsMemoApiService.getConsultationDetails(consultationId)

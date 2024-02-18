@@ -6,8 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:background="@color/white"
     tools:context=".presenter.consultinglist.ConsultingListFragment"
     android:id="@+id/fragment_consulting_list">
+
 
     <ImageView
         android:id="@+id/iv_left_arrow"
@@ -31,17 +33,22 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_left_arrow" />
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="151dp">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_consult_list"
-        android:layout_width="409dp"
-        android:layout_height="652dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_left_arrow"
         app:layout_constraintTop_toBottomOf="@+id/tv_consult_list"
-        tools:listitem="@layout/item_consult_list_month"/>
+        tools:listitem="@layout/item_consult_list_conver"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+</ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create"
@@ -65,5 +72,4 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
