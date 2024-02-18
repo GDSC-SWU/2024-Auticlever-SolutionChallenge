@@ -21,6 +21,7 @@ import com.example.auticlever.data.ApiPool
 import com.example.auticlever.data.dto.ConversationUploadDto
 import com.example.auticlever.databinding.FragmentRecordingBinding
 import com.example.auticlever.presenter.main.MainFragment
+import com.example.auticlever.presenter.recordingdetail.DeleteDetailDialog
 import com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment
 import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -168,7 +169,6 @@ class RecordingFragment : Fragment() {
             binding.tvRecordingTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray4))
             binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray3))
             Log.d("Stop", "녹음 중단")
-
         }
         mediaRecorder = null
     }
@@ -181,7 +181,7 @@ class RecordingFragment : Fragment() {
         }
     }
 
-    private fun conversationUploadApi(file: File) {
+    fun conversationUploadApi(file: File) {
         val requestBody = file.asRequestBody("audio/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
 
@@ -208,6 +208,7 @@ class RecordingFragment : Fragment() {
                                 .commit()
                         }
                     } else {
+                        ErrorDialog()
                         Log.d("error", "실패한 응답 ${response.code()}")
                     }
                 }
@@ -244,6 +245,12 @@ class RecordingFragment : Fragment() {
         }
     }
 
+    fun error() {
+        recordedFile?.let { file ->
+            conversationUploadApi(file)
+        }
+    }
+
     private fun setUpViewPager() {
 
         var adapter = RecordingPagerAdapter(childFragmentManager)
@@ -266,5 +273,12 @@ class RecordingFragment : Fragment() {
         SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         SaveDialog.show()
+    }
+
+    private fun ErrorDialog() {
+        val ErrorDialog = ErrorDialog(requireContext(), this)
+        ErrorDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        ErrorDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        ErrorDialog.show()
     }
 }
