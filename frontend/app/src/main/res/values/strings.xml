@@ -62,7 +62,7 @@
         Egestas pretium venenatis interdum commodo vitae eros velit. Arcu neque aliquam amet aliquet scelerisque molestie risus id tellus. Interdum nullam id scelerisque dignissim nulla pretium. Urna neque sed quam eu mattis.
         Fames ut amet quis id tellus augue scelerisque dignissim. Ornare erat tincidunt augue tempus vel vitae. Porta libero mattis cras sit.
     </string>
-    <string name="start_time">00:03</string>
-    <string name="end_time">00:03</string>
+    <string name="start_time">00:00</string>
+    <string name="end_time">00:00</string>
     <string name="none_memo">Tap to write a note</string>
 </resources>

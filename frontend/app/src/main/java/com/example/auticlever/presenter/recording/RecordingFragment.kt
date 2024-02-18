@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +34,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
 
 class RecordingFragment : Fragment() {
 
@@ -173,6 +173,7 @@ class RecordingFragment : Fragment() {
         mediaRecorder = null
     }
 
+
     override fun onStop() {
         super.onStop()
         if (isRecording) {
@@ -181,39 +182,41 @@ class RecordingFragment : Fragment() {
     }
 
     private fun conversationUploadApi(file: File) {
-        //val file = File(Environment.getExternalStorageDirectory(), "recording_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.mp3")
-        val requestBody = file.asRequestBody("audio/mp3".toMediaTypeOrNull())
+        val requestBody = file.asRequestBody("audio/*".toMediaTypeOrNull())
         val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
 
-        getConversationUploadService.getConversationUpload(part).enqueue(object :
-            Callback<ConversationUploadDto> {
-            override fun onResponse(call: Call<ConversationUploadDto>, response: Response<ConversationUploadDto>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    responseBody?.let {
-                        Log.d("success", "업로드 성공")
-                        val recordingDetailFragment = RecordingDetailFragment()
-                        val bundle = Bundle().apply {
-                            //putString("keywords", responseBody.keywords.joinToString(", "))
-                            Log.d("keywords", responseBody.keywords.joinToString(", "))
-                            Log.d("summary", responseBody.summary)
+        getConversationUploadService.getConversationUpload(part)
+            .enqueue(object : Callback<ConversationUploadDto> {
+                override fun onResponse(
+                    call: Call<ConversationUploadDto>,
+                    response: Response<ConversationUploadDto>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        responseBody?.let {
+                            Log.d("success", "업로드 성공")
+                            val recordingDetailFragment = RecordingDetailFragment()
+                            val bundle = Bundle().apply {
+                                //putString("keywords", responseBody.keywords.joinToString(", "))
+                                Log.d("keywords", responseBody.keywords.joinToString(", "))
+                                Log.d("summary", responseBody.summary)
+                            }
+                            recordingDetailFragment.arguments = bundle
+
+                            requireActivity().supportFragmentManager.beginTransaction()
+                                .replace(binding.fragmentContainer.id, RecordingDetailFragment())
+                                .commit()
                         }
-                        recordingDetailFragment.arguments = bundle
-
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(binding.fragmentContainer.id, RecordingDetailFragment())
-                            .commit()
+                    } else {
+                        Log.d("error", "실패한 응답 ${response.code()}")
                     }
-                } else {
-                    Log.d("error", "실패한 응답 ${response.code()}")
                 }
-            }
 
-            override fun onFailure(call: Call<ConversationUploadDto>, t: Throwable) {
-                t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
-            }
-        })
-    }
+                override fun onFailure(call: Call<ConversationUploadDto>, t: Throwable) {
+                    t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
+                }
+            })
+        }
 
     private fun updateRecordingTime() {
         val elapsedMillis = SystemClock.elapsedRealtime() - recordingStartTime
