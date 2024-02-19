@@ -24,8 +24,8 @@ class LeaveDetailDialog(context: Context, private val consultingDetailfragment: 
         binding.btnCancle.setOnClickListener {
             dismiss() // 다이얼로그 닫기
         }
-        binding.btnDelete.setOnClickListener{
-            consultingDetailfragment.goMain()
+        binding.btnLeave.setOnClickListener{
+            consultingDetailfragment.goList()
             dismiss()
         }
     }

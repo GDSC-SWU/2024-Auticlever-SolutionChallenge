@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_container"
     tools:context=".presenter.consultingdetail.ConsultingDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -99,7 +100,7 @@
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
             <EditText
-                android:id="@+id/et_title_keyword"
+                android:id="@+id/et_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -108,7 +109,7 @@
                 android:background="@android:color/transparent"
                 android:lineSpacingExtra="2dp"
                 android:padding="0dp"
-                android:hint="Enter the subject"
+                android:hint="Enter the title"
                 android:textColorHint="@color/gray5"
                 android:textAppearance="@font/font_pretendard_semibold"
                 android:textColor="@color/black"
@@ -130,8 +131,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
-            <TextView
-                android:id="@+id/tv_main_memo"
+            <EditText
+                android:id="@+id/et_main_memo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -148,7 +149,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_title_keyword" />
+                app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
             <TextView
                 android:id="@+id/tv_memo_title"
@@ -166,7 +167,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/tv_main_memo"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_main_memo"/>
 
             <EditText
                 android:id="@+id/et_memo"
@@ -187,7 +188,8 @@
                 android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/tv_memo_title"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                 />
 
             <CheckBox
                 android:id="@+id/check_pinning"
@@ -238,7 +240,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_ai_summarize_title" />
 
             <TextView
-                android:id="@+id/tv_recording_content_title"
+                android:id="@+id/tv_consulting_content_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -254,7 +256,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_ai_summarize" />
 
             <TextView
-                android:id="@+id/tv_recording_content"
+                android:id="@+id/tv_consulting_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -268,7 +270,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/tv_recording_content_title" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_consulting_content_title" />
 
             <TextView
                 android:id="@+id/tv_main_title"
@@ -280,8 +282,8 @@
                 android:text="Main memo"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/tv_main_memo"
-                app:layout_constraintTop_toTopOf="@id/tv_main_memo" />
+                app:layout_constraintStart_toStartOf="@id/et_main_memo"
+                app:layout_constraintTop_toTopOf="@id/et_main_memo" />
 
             <ImageButton
                 android:id="@+id/ib_tip"
@@ -291,7 +293,7 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/consult_detail_question"
                 app:layout_constraintStart_toEndOf="@id/tv_main_title"
-                app:layout_constraintTop_toTopOf="@id/tv_main_memo" />
+                app:layout_constraintTop_toTopOf="@id/et_main_memo" />
 
             <ImageView
                 android:id="@+id/iv_upload_background"

@@ -2,13 +2,19 @@ package com.example.auticlever.data
 
 import com.example.auticlever.data.api.ConsultUploadApiFactory
 import com.example.auticlever.data.api.ConsultUploadApiService
+import com.example.auticlever.data.api.ConsultCsMemoApiService
+import com.example.auticlever.data.api.ConsultDataApiService
+import com.example.auticlever.data.api.ConsultListApiService
 import com.example.auticlever.data.api.ConversationDataApiService
 import com.example.auticlever.data.api.ConversationDeleteApiService
 import com.example.auticlever.data.api.ConversationFileApiService
 import com.example.auticlever.data.api.ConversationListApiService
 import com.example.auticlever.data.api.ConversationMemoApiService
 import com.example.auticlever.data.api.ConversationUploadApiService
+import com.example.auticlever.data.api.DeleteConsultDetailApiService
 import com.example.auticlever.data.api.KeywordsApiService
+import com.example.auticlever.data.api.MainMemoApiService
+import com.google.android.gms.measurement.sdk.R
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -25,6 +31,11 @@ object ApiPool {
     val getConversationUpload = RetrofitPool.retrofit.create(ConversationUploadApiService::class.java)
     val postConversationMemo = RetrofitPool.retrofit.create(ConversationMemoApiService::class.java)
     val deleteConversation = RetrofitPool.retrofit.create(ConversationDeleteApiService::class.java)
+    val getConsultList = RetrofitPool.retrofit.create(ConsultListApiService::class.java)
+    val getConsultData = RetrofitPool.retrofit.create(ConsultDataApiService::class.java)
+    val getMainMemo = RetrofitPool.retrofit.create(MainMemoApiService::class.java)
+    val sendConsultCsMemoData = RetrofitPool.retrofit.create(ConsultCsMemoApiService::class.java)
+    val deleteConsultDetail = RetrofitPool.retrofit.create(DeleteConsultDetailApiService::class.java)
 }
 
 object RetrofitPool {
