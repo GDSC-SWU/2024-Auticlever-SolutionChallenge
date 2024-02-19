@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.auticlever.R
 import com.example.auticlever.adapter.ConsultListAdapter
 import com.example.auticlever.data.ApiPool
@@ -14,6 +15,7 @@ import com.example.auticlever.data.dto.Consultations
 import com.example.auticlever.databinding.FragmentConsultingListBinding
 import com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragment
 import com.example.auticlever.presenter.main.MainFragment
+import com.google.android.flexbox.FlexboxLayoutManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,18 +49,20 @@ class ConsultingListFragment : Fragment() {
                 .replace(R.id.fragment_container, MainFragment())
                 .commit()
         }
+
         getConsultListApi()
         return binding.root
 
     }
     private fun getConsultListApi() {
-        getConsultList.getConsultList().enqueue(object : Callback<ConsultListDto> {
+
+        getConsultList.getConsultList().enqueue(object : retrofit2.Callback<ConsultListDto> {
             override fun onResponse(
                 call: Call<ConsultListDto>, response: Response<ConsultListDto>
             ) {
                 if (response.isSuccessful) {
                     val adapter = ConsultListAdapter()
-                    binding.rvConsultList.adapter = adapter
+                    binding.rvConsultation.adapter = adapter
 
                     adapter.setOnItemClickListener(object : ConsultListAdapter.OnItemClickListener {
                         override fun onItemClick(consultations: Consultations) {
@@ -83,11 +87,16 @@ class ConsultingListFragment : Fragment() {
                         })
                     }
                 } else {
-                    Log.d("error", "실패한 응답")
+                    Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
                 }
             }
             override fun onFailure(call: Call<ConsultListDto>, t: Throwable) {
-                t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
+                if (call.isCanceled) {
+                    Log.d("error", "서버 요청 취소")
+                } else {
+                    // 네트워크 오류 또는 예외 발생 시 처리
+                    Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
+                }
             }
         })
     }

@@ -36,16 +36,16 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="151dp">
+    android:layout_marginTop="155dp">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_consult_list"
+        android:id="@+id/rv_consultation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
         app:layout_constraintStart_toEndOf="@+id/iv_left_arrow"
         app:layout_constraintTop_toBottomOf="@+id/tv_consult_list"
-        tools:listitem="@layout/item_consult_list_conver"
+        tools:listitem="@layout/item_consult_list_day"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 </ScrollView>

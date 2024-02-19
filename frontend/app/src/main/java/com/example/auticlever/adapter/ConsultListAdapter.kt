@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.auticlever.data.dto.Consultations
-import com.example.auticlever.databinding.ItemConsultListConverBinding
+import com.example.auticlever.databinding.ItemConsultListDayBinding
 
 class ConsultListAdapter() :
     ListAdapter<Consultations, ConsultListAdapter.ConsultListViewHolder>(ConsultListDiffCallback()) {
@@ -23,7 +23,7 @@ class ConsultListAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConsultListViewHolder {
-        val binding = ItemConsultListConverBinding.inflate(
+        val binding = ItemConsultListDayBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -41,7 +41,7 @@ class ConsultListAdapter() :
         }
     }
 
-    inner class ConsultListViewHolder(private val binding: ItemConsultListConverBinding) :
+    inner class ConsultListViewHolder(private val binding: ItemConsultListDayBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(consultations: Consultations) {
@@ -55,10 +55,21 @@ class ConsultListAdapter() :
 
             val month = getMonth(consultations.date.substring(5, 7))
             val day = consultations.date.substring(8, 10)
+
             binding.tvDay1.text = month
             binding.tvDay2.text = day
-            binding.tvTitle.text = consultations.title
-            binding.tvCsMemo.text = consultations.csMemo
+            if(consultations.title==null){
+                binding.tvTitle.text ="Blank Title"
+            }else{
+                binding.tvTitle.text=consultations.title
+            }
+
+            if(consultations.title==null){
+                binding.tvMemo.text ="Blank Memo"
+            }else{
+                binding.tvMemo.text =consultations.csMemo
+            }
+
         }
 
         fun showEmptyState() {

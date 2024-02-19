@@ -2,7 +2,6 @@ package com.example.auticlever.data.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
 data class ConsultListDto(
@@ -16,11 +15,11 @@ data class Consultations(
     val consultationId: Int,
 
     @SerialName("title")
-    val title: String,
+    val title: String?,
 
     @SerialName("date")
     val date: String,
 
     @SerialName("csMemo")
-    val csMemo: String
+    val csMemo: String?
 )
