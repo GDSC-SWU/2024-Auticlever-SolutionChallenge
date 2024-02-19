@@ -1,35 +1,35 @@
 package com.example.auticlever.presenter.recording
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaRecorder
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.Manifest
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+//import cafe.adriel.androidaudioconverter.AndroidAudioConverter
 import com.example.auticlever.R
 import com.example.auticlever.adapter.RecordingPagerAdapter
 import com.example.auticlever.data.ApiPool
 import com.example.auticlever.data.dto.ConversationUploadDto
 import com.example.auticlever.databinding.FragmentRecordingBinding
 import com.example.auticlever.presenter.main.MainFragment
-import com.example.auticlever.presenter.recordingdetail.DeleteDetailDialog
 import com.example.auticlever.presenter.recordingdetail.RecordingDetailFragment
 import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +39,8 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+//import cafe.adriel.androidaudioconverter.callback.IConvertCallback
+//import cafe.adriel.androidaudioconverter.model.AudioFormat
 
 
 class RecordingFragment : Fragment() {
@@ -178,7 +180,9 @@ class RecordingFragment : Fragment() {
             binding.tvRecordingTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray4))
             binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray3))
             Log.d("Stop", "녹음 중단")
+
             recordedFile?.let { file ->
+                //convertAudio(file)
                 recordedFileUri = Uri.fromFile(file)
                 Log.d("File Uri", recordedFileUri.toString())
             }
@@ -321,4 +325,24 @@ class RecordingFragment : Fragment() {
         ErrorDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         ErrorDialog.show()
     }
+
+
+//    private fun convertAudio(file: File) {
+//        val callback = object : IConvertCallback {
+//            override fun onSuccess(convertedFile: File?) {
+//                Log.d("success", "성공")
+//            }
+//
+//            override fun onFailure(error: Exception?) {
+//                Log.d("success", "실패")
+//            }
+//        }
+//        AndroidAudioConverter.with(requireContext())
+//            .setFile(file)
+//            .setFormat(AudioFormat.MP3)
+//            .setCallback(callback)
+//            .convert()
+//        Log.d("success", "mp3 변환 성공")
+//    }
+
 }
