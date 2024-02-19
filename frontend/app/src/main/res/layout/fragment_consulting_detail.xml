@@ -335,27 +335,32 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <EditText
-        android:id="@+id/et_bottom_memo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:gravity="top"
-        android:isScrollContainer="true"
-        android:minLines="4"
-        android:maxLines="4"
-        android:inputType="textMultiLine"
-        android:paddingVertical="7dp"
-        android:paddingHorizontal="20dp"
-        android:text="@string/none_memo"
-        android:textAppearance="@font/font_pretendard_regular"
-        android:textSize="14sp"
-        android:lineSpacingExtra="6dp"
-        android:background="@color/gray6"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" >
 
-
+        <EditText
+            android:id="@+id/et_bottom_memo"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:gravity="top"
+            android:isScrollContainer="true"
+            android:minLines="4"
+            android:maxLines="4"
+            android:inputType="textMultiLine"
+            android:paddingVertical="7dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/none_memo"
+            android:textAppearance="@font/font_pretendard_regular"
+            android:textSize="14sp"
+            android:lineSpacingExtra="6dp"
+            android:background="@color/gray6"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

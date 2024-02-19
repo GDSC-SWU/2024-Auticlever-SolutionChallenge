@@ -86,10 +86,6 @@ class RecordingDetailFragment : Fragment() {
             CheckPinning()
         }
 
-        binding.btnEdit.setOnClickListener{
-            KeyboardUp()
-        }
-
         binding.checkPlay.setOnClickListener{
             CheckPlaying(mediaPlayer)
         }

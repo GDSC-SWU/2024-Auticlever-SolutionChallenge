@@ -16,7 +16,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -76,7 +78,7 @@ class ConsultingDetailFragment : Fragment() {
         binding = FragmentConsultingDetailBinding.inflate(inflater)
         getConsultDataApi()
         getMainMemoApi()
-
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         binding.tvDelete.setOnClickListener {
             deleteDialog()
         }

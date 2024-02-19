@@ -47,7 +47,7 @@
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
-            <EditText
+            <TextView
                 android:id="@+id/et_title_keyword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,20 +63,8 @@
                 android:textColor="@color/black"
                 android:background="@android:color/transparent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_date"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintEnd_toStartOf="@+id/btn_edit"/>
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout" />
 
-            <ImageButton
-                android:id="@+id/btn_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
-                android:padding="0dp"
-                android:src="@drawable/ic_edit"
-                android:background="@android:color/transparent"
-                app:layout_constraintTop_toBottomOf="@id/tv_date"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
 
             <TextView
                 android:id="@+id/tv_memo_title"
@@ -274,7 +262,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/et_bottom_memo"
+        app:layout_constraintBottom_toTopOf="@id/scroll_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -339,27 +327,35 @@
         app:layout_constraintBottom_toBottomOf="@+id/bottom_appbar"
         app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
 
-    <EditText
-        android:id="@+id/et_bottom_memo"
+    <ScrollView
+        android:id="@+id/scroll_edit"
         android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:gravity="top"
-        android:isScrollContainer="true"
-        android:minLines="4"
-        android:maxLines="4"
-        android:inputType="textMultiLine"
-        android:paddingVertical="7dp"
-        android:paddingHorizontal="20dp"
-        android:text="@string/none_memo"
-        android:textAppearance="@font/font_pretendard_regular"
-        android:textSize="14sp"
-        android:lineSpacingExtra="6dp"
-        android:background="@color/gray6"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" >
+
+        <EditText
+            android:id="@+id/et_bottom_memo"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:gravity="top"
+            android:isScrollContainer="true"
+            android:minLines="4"
+            android:maxLines="4"
+            android:inputType="textMultiLine"
+            android:paddingVertical="7dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/none_memo"
+            android:textAppearance="@font/font_pretendard_regular"
+            android:textSize="14sp"
+            android:lineSpacingExtra="6dp"
+            android:background="@color/gray6"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
