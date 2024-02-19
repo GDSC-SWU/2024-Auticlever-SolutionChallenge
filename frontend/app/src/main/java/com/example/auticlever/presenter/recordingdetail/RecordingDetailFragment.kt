@@ -143,6 +143,7 @@ class RecordingDetailFragment : Fragment() {
         DeleteDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         DeleteDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         DeleteDialog.show()
+
     }
 
     private fun SaveDialog() {
@@ -151,6 +152,7 @@ class RecordingDetailFragment : Fragment() {
         SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         SaveDialog.show()
+
     }
 
     private fun LeaveDialog() {
