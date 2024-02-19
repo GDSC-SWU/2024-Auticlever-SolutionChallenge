@@ -1,9 +1,11 @@
 package com.example.auticlever.data
 
+import com.example.auticlever.data.api.ConsultListApiService
 import com.example.auticlever.data.api.ConversationDataApiService
 import com.example.auticlever.data.api.ConversationFileApiService
 import com.example.auticlever.data.api.ConversationListApiService
 import com.example.auticlever.data.api.KeywordsApiService
+import com.google.android.gms.measurement.sdk.R
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,6 +16,7 @@ object ApiPool {
     val getConversationFile = RetrofitPool.retrofit.create(ConversationFileApiService::class.java)
     val getConversationList = RetrofitPool.retrofit.create(ConversationListApiService::class.java)
     val getKeywords = RetrofitPool.retrofit.create(KeywordsApiService::class.java)
+    val getConsultList = RetrofitPool.retrofit.create(ConsultListApiService::class.java)
 }
 
 object RetrofitPool {

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ConsultCsMemoRequestDto(
+data class ConsultCsMemoDto(
     @SerialName("title")
     val title: String,
     @SerialName("csMemo")
@@ -19,4 +19,10 @@ data class ConsultCsMemoResponseDto(
     val csMemoMessage: String,
     @SerialName("mainMemo_message")
     val mainMemoMessage: String
+)
+
+@Serializable
+data class ErrorDto(
+    @SerialName("error")
+    val error: String
 )

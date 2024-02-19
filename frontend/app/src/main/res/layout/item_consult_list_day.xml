@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="24dp">
+    android:paddingBottom="24dp">
 
     <ImageView
         android:id="@+id/iv_circle"
@@ -12,19 +13,20 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/consult_list_circle" />
+        android:background="@drawable/consult_list_circle" />
 
     <TextView
         android:id="@+id/tv_day1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="6dp"
         android:textColor="#FF5E5A90"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
         app:layout_constraintTop_toTopOf="@id/iv_circle"
-        tools:text="Fri"/>
+        tools:fontFamily="@font/font_pretendard_regular"
+        tools:text="Feb" />
 
     <TextView
         android:id="@+id/tv_day2"
@@ -39,7 +41,7 @@
         tools:text="19"/>
 
     <TextView
-        android:id="@+id/tv_text1"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -51,16 +53,16 @@
         tools:text="12/30 Center consultation" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_memo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/font_pretendard_regular"
+        android:text="Showing multiple emotions. This is MEMO.\nmax 2 lines"
         android:textColor="@color/gray3"
         android:textSize="14sp"
-        android:text="Showing multiple emotions. This is MEMO.\nmax 2 lines"
         app:layout_constraintStart_toEndOf="@+id/iv_circle"
-        app:layout_constraintTop_toBottomOf="@+id/tv_text1" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
