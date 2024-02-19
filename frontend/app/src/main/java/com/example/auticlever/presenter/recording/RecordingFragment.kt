@@ -11,8 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.Manifest
+import android.net.Uri
+import android.os.Environment
 import android.os.Handler
 import android.os.SystemClock
+import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
@@ -27,6 +30,7 @@ import com.example.auticlever.presenter.recordloading.RecordLoadingFragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,6 +55,7 @@ class RecordingFragment : Fragment() {
 
     private var recordingStartTime: Long = 0
     private val handler = Handler()
+    private lateinit var recordedFileUri : Uri
 
     private val getConversationUploadService = ApiPool.getConversationUpload
 
@@ -130,31 +135,35 @@ class RecordingFragment : Fragment() {
     }
 
     private fun startRecording() {
-            mediaRecorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
-                setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
+            setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
+            setAudioChannels(1)
+            setAudioSamplingRate(44100)
+            setAudioEncodingBitRate(283000)
 
-                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-                recordedFile = File(context?.cacheDir, "recording_${timeStamp}.mp3")
-                setOutputFile(recordedFile!!.absolutePath)
+            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            recordedFile = File(directory, "recording_${timeStamp}.mp3")
+            setOutputFile(recordedFile!!.absolutePath)
 
-                try {
-                    Log.d("Start", "녹음 시작")
-                    prepare()
-                    start()
-                    recordingStartTime = SystemClock.elapsedRealtime()
-                    handler.postDelayed(recordingRunnable, 100)
-                    soundVisualizerView.clearVisualization()
-                    soundVisualizerView.startVisualizing(false)
-                    isRecording = true
-                    binding.ibRecording.setBackgroundResource(R.drawable.recording_stop)
-                    binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.systemred))
-                    Log.d("TAG", "파일 저장 경로: $recordedFile")
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    Log.d("Error", "파일 저장 실패")
-                }
+            try {
+                Log.d("Start", "녹음 시작")
+                prepare()
+                start()
+                recordingStartTime = SystemClock.elapsedRealtime()
+                handler.postDelayed(recordingRunnable, 100)
+                soundVisualizerView.clearVisualization()
+                soundVisualizerView.startVisualizing(false)
+                isRecording = true
+                binding.ibRecording.setBackgroundResource(R.drawable.recording_stop)
+                binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.systemred))
+                Log.d("TAG", "파일 저장 경로: $recordedFile")
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Log.d("Error", "파일 저장 실패")
+            }
         }
     }
 
@@ -169,6 +178,10 @@ class RecordingFragment : Fragment() {
             binding.tvRecordingTime.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray4))
             binding.recordingBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gray3))
             Log.d("Stop", "녹음 중단")
+            recordedFile?.let { file ->
+                recordedFileUri = Uri.fromFile(file)
+                Log.d("File Uri", recordedFileUri.toString())
+            }
         }
         mediaRecorder = null
     }
@@ -181,43 +194,70 @@ class RecordingFragment : Fragment() {
         }
     }
 
-    fun conversationUploadApi(file: File) {
-        val requestBody = file.asRequestBody("audio/*".toMediaTypeOrNull())
-        val part = MultipartBody.Part.createFormData("file", file.name, requestBody)
-
-        getConversationUploadService.getConversationUpload(part)
-            .enqueue(object : Callback<ConversationUploadDto> {
-                override fun onResponse(
-                    call: Call<ConversationUploadDto>,
-                    response: Response<ConversationUploadDto>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        responseBody?.let {
-                            Log.d("success", "업로드 성공")
-                            val recordingDetailFragment = RecordingDetailFragment()
-                            val bundle = Bundle().apply {
-                                //putString("keywords", responseBody.keywords.joinToString(", "))
-                                Log.d("keywords", responseBody.keywords.joinToString(", "))
-                                Log.d("summary", responseBody.summary)
-                            }
-                            recordingDetailFragment.arguments = bundle
-
-                            requireActivity().supportFragmentManager.beginTransaction()
-                                .replace(binding.fragmentContainer.id, RecordingDetailFragment())
-                                .commit()
-                        }
-                    } else {
-                        ErrorDialog()
-                        Log.d("error", "실패한 응답 ${response.code()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<ConversationUploadDto>, t: Throwable) {
-                    t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
-                }
-            })
+    private fun outLoading(){
+        val loadingFragment = requireActivity().supportFragmentManager.findFragmentByTag("ConsultLoadingFragment")
+        loadingFragment?.let {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .remove(it)
+                .commit()
         }
+    }
+
+    private fun getFileName(uri: Uri): String {
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+        cursor?.let {
+            it.moveToFirst()
+            val columnIndex = it.getColumnIndex(MediaStore.Audio.AudioColumns.DISPLAY_NAME)
+            val fileName = it.getString(columnIndex)
+            it.close()
+            return fileName ?: ""
+        } ?: run {
+            return ""
+        }
+    }
+
+    fun conversationUploadApi(fileUri: Uri) {
+        val inputStream = requireContext().contentResolver.openInputStream(fileUri)
+        val fileRequestBody = inputStream?.readBytes()?.toRequestBody("audio/*".toMediaTypeOrNull())
+
+        fileRequestBody?.let {
+            // 파일 이름 및 확장자를 추출
+            val fileName = getFileName(fileUri)
+
+            // 파일 파트를 생성
+            val filePart = MultipartBody.Part.createFormData("file", fileName, fileRequestBody)
+
+            getConversationUploadService.getConversationUpload(filePart)
+                .enqueue(object : Callback<ConversationUploadDto> {
+                    override fun onResponse(
+                        call: Call<ConversationUploadDto>,
+                        response: Response<ConversationUploadDto>
+                    ) {
+                        if (response.isSuccessful) {
+                            outLoading()
+                            val responseBody = response.body()
+                            responseBody?.let {
+                                Log.d("success", "업로드 성공")
+                                val recordingDetailFragment = RecordingDetailFragment()
+                                val bundle = Bundle().apply {
+                                    //putString("keywords", responseBody.keywords.joinToString(", "))
+                                    Log.d("keywords", responseBody.keywords.joinToString(", "))
+                                    Log.d("summary", responseBody.summary)
+                                }
+                                recordingDetailFragment.arguments = bundle
+                            }
+                        } else {
+                            ErrorDialog()
+                            Log.d("error", "실패한 응답 ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ConversationUploadDto>, t: Throwable) {
+                        t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
+                    }
+                })
+        }
+    }
 
     private fun updateRecordingTime() {
         val elapsedMillis = SystemClock.elapsedRealtime() - recordingStartTime
@@ -238,16 +278,16 @@ class RecordingFragment : Fragment() {
 
     fun fragmentsave() {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainer.id, RecordLoadingFragment())
+            .add(binding.fragmentContainer.id, RecordLoadingFragment())
             .commit()
         recordedFile?.let { file ->
-            conversationUploadApi(file)
+            conversationUploadApi(recordedFileUri)
         }
     }
 
     fun error() {
         recordedFile?.let { file ->
-            conversationUploadApi(file)
+            conversationUploadApi(recordedFileUri)
         }
     }
 
