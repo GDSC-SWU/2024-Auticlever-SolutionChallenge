@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,15 +19,22 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
+import com.example.auticlever.data.ApiPool.getConsultData
 import com.example.auticlever.data.api.ConsultCsMemoApiFactory
 import com.example.auticlever.data.api.ConsultUploadApiFactory
 import com.example.auticlever.data.dto.ConsultCsMemoDto
 import com.example.auticlever.data.dto.ConsultCsMemoResponseDto
+import com.example.auticlever.data.dto.ConsultDataDto
 import com.example.auticlever.data.dto.ConsultUploadDto
+import com.example.auticlever.data.dto.ConversationData
 import com.example.auticlever.data.dto.ErrorDto
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
 import com.example.auticlever.presenter.consultloading.ConsultLoadingFragment
 import com.example.auticlever.presenter.main.MainFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -57,7 +65,7 @@ class ConsultingDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentConsultingDetailBinding.inflate(inflater)
-
+        getConsultDataApi()
 
         binding.tvDelete.setOnClickListener {
             deleteDialog()
@@ -146,8 +154,8 @@ class ConsultingDetailFragment : Fragment() {
         binding.scrollViewMemo.visibility = View.VISIBLE
         binding.tvAiSummarizeTitle.visibility = View.VISIBLE
         binding.tvAiSummarize.visibility = View.VISIBLE
-        binding.tvRecordingContentTitle.visibility = View.VISIBLE
-        binding.tvRecordingContent.visibility = View.VISIBLE
+        binding.tvConsultingContentTitle.visibility = View.VISIBLE
+        binding.tvConsultingContent.visibility = View.VISIBLE
     }
     private fun outLoading(){
         val loadingFragment = requireActivity().supportFragmentManager.findFragmentByTag("ConsultLoadingFragment")
@@ -160,10 +168,10 @@ class ConsultingDetailFragment : Fragment() {
 
 
      private fun keyboardUp() {
-        binding.etTitleKeyword.requestFocus()
+        binding.etTitle.requestFocus()
 
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding.etTitleKeyword, InputMethodManager.SHOW_IMPLICIT)
+        imm.showSoftInput(binding.etTitle, InputMethodManager.SHOW_IMPLICIT)
     }
 
      private fun tipDialog() {
@@ -211,7 +219,7 @@ class ConsultingDetailFragment : Fragment() {
     // 수정값 저장하기
     fun saveCsMemoDetails() {
         val consultationId = arguments?.getInt("conversationId", -1) ?: -1
-        val title = binding.etTitleKeyword.text.toString()
+        val title = binding.etTitle.text.toString()
         val csMemo = binding.etMemo.text.toString()
         val mainMemo = binding.tvMainMemo.text.toString()
 
@@ -294,6 +302,50 @@ class ConsultingDetailFragment : Fragment() {
             Log.e("error", "consultationId is null. Cannot load consultation details.")
         }
     }*/
+    fun extractDate(dateField: String): String? {
+        val dateRegex = """(\d{4}-\d{2}-\d{2})""".toRegex()
+        val matchResult = dateRegex.find(dateField)
+
+        return matchResult?.let {
+            val datePart = it.groupValues[1]
+            val timePart = it.groupValues[2]
+            "$datePart $timePart"
+        }
+    }
+    private fun getConsultDataApi() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                // 대화 데이터 가져오기
+                val consultData = getConsultData()
+
+                // 대화 데이터를 UI에 설정
+                setupConsultData(consultData)
+            } catch (e: Exception) {
+                Log.e("Error", "Failed to load data: ${e.message}")
+            }
+        }
+    }
+
+    private suspend fun getConsultData(): ConsultDataDto {
+        val consultationId = arguments?.getInt("consultationId", -1) ?: -1
+        return withContext(Dispatchers.IO) {
+            getConsultData.getConsultData(consultationId).execute().body()!!
+        }
+    }
+
+    private fun setupConsultData(consultData: ConsultDataDto) {
+        showContents()
+        if (consultData.csMemo_data.firstOrNull()?.content != null) {
+            binding.etMemo.text = Editable.Factory.getInstance().newEditable(consultData.csMemo_data.firstOrNull()?.content)
+        } else {
+            binding.etMemo.hint = resources.getString(R.string.none_memo)
+            binding.etBottomMemo.hint = resources.getString(R.string.none_memo)
+        }
+        binding.etTitle.text = Editable.Factory.getInstance().newEditable(consultData.csMemo_data.firstOrNull()?.title)
+        binding.tvAiSummarize.text = consultData.consultation_data.summary
+        binding.tvConsultingContent.text = consultData.consultation_data.content
+        binding.tvDate.text = extractDate(consultData.consultation_data.date)
+    }
 
      private fun clickUploadFile() {
 

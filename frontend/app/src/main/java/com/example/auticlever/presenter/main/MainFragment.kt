@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import com.example.auticlever.adapter.ConversationListAdapter
 import com.example.auticlever.adapter.MainKeywordsAdapter
 import com.example.auticlever.data.ApiPool
+import com.example.auticlever.data.ApiPool.getMainMemo
 import com.example.auticlever.data.dto.ConversationListDto
 import com.example.auticlever.data.dto.Conversations
 import com.example.auticlever.data.dto.KeywordsDto
+import com.example.auticlever.data.dto.MainMemoDto
 import com.example.auticlever.databinding.FragmentMainBinding
 import com.example.auticlever.presenter.consultingdetail.ConsultingDetailFragment
 import com.example.auticlever.presenter.consultinglist.ConsultingListFragment
@@ -64,11 +66,33 @@ class MainFragment : Fragment() {
                 .replace(binding.fragmentContainer.id, ConsultingDetailFragment())
                 .commit()
         }
-
+        getMainMemoApi()
         getMainKeywordsApi()
         getConversationListApi()
 
         return binding.root
+    }
+
+    private fun getMainMemoApi() {
+        getMainMemo.getMainMemo().enqueue(object : retrofit2.Callback<MainMemoDto> {
+            override fun onResponse(
+                call: Call<MainMemoDto>, response: Response<MainMemoDto>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    responseBody?.let {
+                        binding.tvConsultHistory.text = it.content
+                        Log.d("success", "성공")
+                    }
+                } else {
+                    Log.d("error", "실패한 응답")
+                }
+            }
+
+            override fun onFailure(call: Call<MainMemoDto>, t: Throwable) {
+                t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
+            }
+        })
     }
 
     private fun getMainKeywordsApi() {

@@ -101,5 +101,4 @@ class ConsultingListFragment : Fragment() {
         })
     }
 
-
 }
