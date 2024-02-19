@@ -81,7 +81,7 @@ class MainFragment : Fragment() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     responseBody?.let {
-                        binding.tvConsultHistory.text = it.content
+                        binding.tvConsultHistory.setText(it.content)
                         Log.d("success", "성공")
                     }
                 } else {

@@ -1,10 +1,12 @@
 package com.example.auticlever.data
 
+import com.example.auticlever.data.api.ConsultCsMemoApiService
 import com.example.auticlever.data.api.ConsultDataApiService
 import com.example.auticlever.data.api.ConsultListApiService
 import com.example.auticlever.data.api.ConversationDataApiService
 import com.example.auticlever.data.api.ConversationFileApiService
 import com.example.auticlever.data.api.ConversationListApiService
+import com.example.auticlever.data.api.DeleteConsultDetailApiService
 import com.example.auticlever.data.api.KeywordsApiService
 import com.example.auticlever.data.api.MainMemoApiService
 import com.google.android.gms.measurement.sdk.R
@@ -21,6 +23,8 @@ object ApiPool {
     val getConsultList = RetrofitPool.retrofit.create(ConsultListApiService::class.java)
     val getConsultData = RetrofitPool.retrofit.create(ConsultDataApiService::class.java)
     val getMainMemo = RetrofitPool.retrofit.create(MainMemoApiService::class.java)
+    val sendConsultCsMemoData = RetrofitPool.retrofit.create(ConsultCsMemoApiService::class.java)
+    val deleteConsultDetail = RetrofitPool.retrofit.create(DeleteConsultDetailApiService::class.java)
 }
 
 object RetrofitPool {

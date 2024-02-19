@@ -62,6 +62,7 @@
         android:text="Showing multiple emotions. This is MEMO.\nmax 2 lines"
         android:textColor="@color/gray3"
         android:textSize="14sp"
+        android:maxLines="2"
         app:layout_constraintStart_toEndOf="@+id/iv_circle"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 

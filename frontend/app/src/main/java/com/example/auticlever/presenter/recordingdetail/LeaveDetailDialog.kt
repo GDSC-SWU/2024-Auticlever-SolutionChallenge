@@ -24,7 +24,7 @@ class LeaveDetailDialog(context: Context, private val recordingDetailfragment: c
         binding.btnCancle.setOnClickListener {
             dismiss() // 다이얼로그 닫기
         }
-        binding.btnDelete.setOnClickListener{
+        binding.btnLeave.setOnClickListener{
             recordingDetailfragment.fragmentleave()
             dismiss()
         }

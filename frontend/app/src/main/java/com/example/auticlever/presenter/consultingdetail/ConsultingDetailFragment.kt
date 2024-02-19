@@ -19,23 +19,24 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
+import com.example.auticlever.data.ApiPool
+import com.example.auticlever.data.ApiPool.deleteConsultDetail
 import com.example.auticlever.data.ApiPool.getConsultData
-import com.example.auticlever.data.api.ConsultCsMemoApiFactory
+import com.example.auticlever.data.ApiPool.sendConsultCsMemoData
 import com.example.auticlever.data.api.ConsultUploadApiFactory
-import com.example.auticlever.data.dto.ConsultCsMemoDto
 import com.example.auticlever.data.dto.ConsultCsMemoResponseDto
 import com.example.auticlever.data.dto.ConsultDataDto
 import com.example.auticlever.data.dto.ConsultUploadDto
-import com.example.auticlever.data.dto.ConversationData
-import com.example.auticlever.data.dto.ErrorDto
+import com.example.auticlever.data.dto.DeleteConsultDetailDto
+import com.example.auticlever.data.dto.MainMemoDto
 import com.example.auticlever.databinding.FragmentConsultingDetailBinding
+import com.example.auticlever.presenter.consultinglist.ConsultingListFragment
 import com.example.auticlever.presenter.consultloading.ConsultLoadingFragment
 import com.example.auticlever.presenter.main.MainFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -66,6 +67,7 @@ class ConsultingDetailFragment : Fragment() {
     ): View? {
         binding = FragmentConsultingDetailBinding.inflate(inflater)
         getConsultDataApi()
+        getMainMemoApi()
 
         binding.tvDelete.setOnClickListener {
             deleteDialog()
@@ -131,6 +133,52 @@ class ConsultingDetailFragment : Fragment() {
         leaveDialog.show()
     }
 
+    fun deleteConsultDetail(){
+        val consultationId = arguments?.getInt("consultationId", -1) ?: -1
+
+        if (consultationId != null) {
+            deleteConsultDetail.deleteConsultDetail(consultationId)
+                .enqueue(object : Callback<DeleteConsultDetailDto> {
+                    override fun onResponse(
+                        call: Call<DeleteConsultDetailDto>,
+                        response: Response<DeleteConsultDetailDto>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            responseBody?.let {
+                                Log.d("삭제 성공", "Delete Message: ${it.message}")
+                            }
+                        } else {
+                            // Handle the case where the server response is not successful
+                            Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
+                            // Check if it's a validation error and log the details
+                            val errorBody = response.errorBody()?.string()
+                            Log.d("error", "Error Body: $errorBody")
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<DeleteConsultDetailDto>,
+                        t: Throwable
+                    ) {
+                        if (call.isCanceled) {
+                            // Handle the case where the server request is canceled
+                            Log.d("error", "서버 요청 취소")
+                        } else {
+                            // Handle network error or exception
+                            Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
+                        }
+                    }
+                })
+        } else {
+            Log.d("error", "consultationId가 null입니다. 처리가 필요합니다.")
+        }
+    }
+    fun goList() {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ConsultingListFragment())
+            .commit()
+    }
     fun goMain() {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, MainFragment())
@@ -209,22 +257,37 @@ class ConsultingDetailFragment : Fragment() {
         }
     }
 
-    //처음값 저장
-     /*private fun setConsultationDetails(title: String, mainMemo: String, csMemo: String) {
-        binding.etTitleKeyword.setText(title)
-        binding.tvMainMemo.text = mainMemo
-        binding.etMemo.setText(csMemo)
-    }*/
+    private fun getMainMemoApi() {
+        ApiPool.getMainMemo.getMainMemo().enqueue(object : retrofit2.Callback<MainMemoDto> {
+            override fun onResponse(
+                call: Call<MainMemoDto>, response: Response<MainMemoDto>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    responseBody?.let {
+                        binding.etMainMemo.setText(it.content)
+                        Log.d("success", "성공")
+                    }
+                } else {
+                    Log.d("error", "실패한 응답")
+                }
+            }
+
+            override fun onFailure(call: Call<MainMemoDto>, t: Throwable) {
+                t.message?.let { Log.d("error", it) } ?: "서버통신 실패(응답값 X)"
+            }
+        })
+    }
 
     // 수정값 저장하기
-    fun saveCsMemoDetails() {
-        val consultationId = arguments?.getInt("conversationId", -1) ?: -1
+    fun updateCsMemoDetails() {
+        val consultationId = arguments?.getInt("consultationId", -1) ?: -1
         val title = binding.etTitle.text.toString()
         val csMemo = binding.etMemo.text.toString()
-        val mainMemo = binding.tvMainMemo.text.toString()
+        val mainMemo = binding.etMainMemo.text.toString()
 
         if (consultationId != null) {
-            ConsultCsMemoApiFactory.consultCsMemoApiService.sendConsultCsMemoData(consultationId,title, csMemo, mainMemo)
+            sendConsultCsMemoData.sendConsultCsMemoData(consultationId,title, csMemo, mainMemo)
                 .enqueue(object : Callback<ConsultCsMemoResponseDto> {
                     override fun onResponse(
                         call: Call<ConsultCsMemoResponseDto>,
@@ -262,46 +325,7 @@ class ConsultingDetailFragment : Fragment() {
         }
     }
 
-    // 존재하는 값 가져오기
-    /*private fun loadConsultationDetails() {
-        // consultationId가 null이 아닌 경우에만 서버 요청을 수행
-        if (consultationId != null) {
-            ConsultCsMemoApiFactory.consultCsMemoApiService.getConsultationDetails(consultationId)
-                .enqueue(object : Callback<ConsultCsMemoRequestDto> {
-                    override fun onResponse(
-                        call: Call<ConsultCsMemoRequestDto>,
-                        response: Response<ConsultCsMemoRequestDto>
-                    ) {
-                        if (response.isSuccessful) {
-                            val responseBody = response.body()
-                            responseBody?.let {
-                                // 서버 응답이 성공적인 경우
-                                setConsultationDetails(it.title, it.csMemo, it.mainMemo)
-                            }
-                        } else {
-                            // 서버 응답이 실패한 경우
-                            Log.d("error", "서버 응답 실패. HTTP상태코드: ${response.code()}")
-                        }
-                    }
-
-                    override fun onFailure(
-                        call: Call<ConsultCsMemoRequestDto>,
-                        t: Throwable
-                    ) {
-                        if (call.isCanceled) {
-                            // 서버 요청이 취소된 경우
-                            Log.d("error", "서버 요청 취소")
-                        } else {
-                            // 네트워크 오류 또는 예외가 발생한 경우
-                            Log.d("error", "네트워크 오류 또는 예외 발생: ${t.message}")
-                        }
-                    }
-                })
-        } else {
-            // consultationId가 null인 경우 에러 메시지 출력
-            Log.e("error", "consultationId is null. Cannot load consultation details.")
-        }
-    }*/
+    //date 바꾸기
     fun extractDate(dateField: String): String? {
         val dateRegex = """(\d{4}-\d{2}-\d{2})""".toRegex()
         val matchResult = dateRegex.find(dateField)

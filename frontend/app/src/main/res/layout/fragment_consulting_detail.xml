@@ -131,8 +131,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
-            <TextView
-                android:id="@+id/tv_main_memo"
+            <EditText
+                android:id="@+id/et_main_memo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -167,7 +167,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintTop_toBottomOf="@+id/tv_main_memo"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_main_memo"/>
 
             <EditText
                 android:id="@+id/et_memo"
@@ -188,7 +188,8 @@
                 android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/tv_memo_title"
                 app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"/>
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+                 />
 
             <CheckBox
                 android:id="@+id/check_pinning"
@@ -281,8 +282,8 @@
                 android:text="Main memo"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/tv_main_memo"
-                app:layout_constraintTop_toTopOf="@id/tv_main_memo" />
+                app:layout_constraintStart_toStartOf="@id/et_main_memo"
+                app:layout_constraintTop_toTopOf="@id/et_main_memo" />
 
             <ImageButton
                 android:id="@+id/ib_tip"
@@ -292,7 +293,7 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/consult_detail_question"
                 app:layout_constraintStart_toEndOf="@id/tv_main_title"
-                app:layout_constraintTop_toTopOf="@id/tv_main_memo" />
+                app:layout_constraintTop_toTopOf="@id/et_main_memo" />
 
             <ImageView
                 android:id="@+id/iv_upload_background"
