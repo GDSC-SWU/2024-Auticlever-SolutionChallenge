@@ -26,7 +26,7 @@ class SaveDetailDialog(context: Context, private val recordingDetailfragment: co
             dismiss() // 다이얼로그 닫기
         }
         binding.btnSave.setOnClickListener{
-            recordingDetailfragment.fragmentleave()
+            recordingDetailfragment.saveMemo()
             dismiss()
         }
     }

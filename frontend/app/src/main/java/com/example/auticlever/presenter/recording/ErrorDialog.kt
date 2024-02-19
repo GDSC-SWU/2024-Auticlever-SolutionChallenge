@@ -1,4 +1,4 @@
-package com.example.auticlever.presenter.recordloading
+package com.example.auticlever.presenter.recording
 
 import android.app.Dialog
 import android.content.Context
@@ -8,7 +8,7 @@ import android.view.Window
 import com.example.auticlever.R
 import com.example.auticlever.databinding.DialogLoadingErrorBinding
 
-class ErrorDialog(context: Context, private val recordingLoadingfragment: com.example.auticlever.presenter.recordloading.RecordLoadingFragment) : Dialog(context) {
+class ErrorDialog(context: Context, private val recordingfragment: RecordingFragment) : Dialog(context) {
     private lateinit var binding : DialogLoadingErrorBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +26,7 @@ class ErrorDialog(context: Context, private val recordingLoadingfragment: com.ex
         }
         binding.btnRetry.setOnClickListener{
             dismiss()
+            recordingfragment.error()
         }
     }
 

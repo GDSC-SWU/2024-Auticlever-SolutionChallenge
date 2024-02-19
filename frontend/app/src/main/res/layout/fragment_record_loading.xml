@@ -27,6 +27,7 @@
         android:id="@+id/tv_transcribing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="@string/transcribing"
         android:textAppearance="@font/font_pretendard_semibold"
         android:textSize="24sp"
