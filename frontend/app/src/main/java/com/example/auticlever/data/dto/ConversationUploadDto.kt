@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 data class ConversationUploadDto(
     @SerialName("message")
     val message: String,
+    @SerialName("conversationId")
+    val conversationId: Int,
     @SerialName("keywords")
     val keywords: List<String>,
     @SerialName("summary")
