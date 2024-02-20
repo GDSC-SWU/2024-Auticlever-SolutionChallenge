@@ -179,7 +179,7 @@
                 android:paddingTop="16dp"
                 android:paddingHorizontal="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/memo"
+                android:text="@string/none_memo"
                 android:textAppearance="@font/font_pretendard_regular"
                 android:textSize="14sp"
                 android:lineSpacingExtra="6dp"
