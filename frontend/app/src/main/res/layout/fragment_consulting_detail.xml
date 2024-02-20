@@ -336,6 +336,7 @@
     </ScrollView>
 
     <ScrollView
+        android:id="@+id/scroll_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -357,8 +358,6 @@
             android:textSize="14sp"
             android:lineSpacingExtra="6dp"
             android:background="@color/gray6"
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
