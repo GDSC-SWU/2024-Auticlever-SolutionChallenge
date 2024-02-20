@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.auticlever.R
 import com.example.auticlever.data.ApiPool
 import com.example.auticlever.data.ApiPool.deleteConsultDetail
@@ -78,7 +79,7 @@ class ConsultingDetailFragment : Fragment() {
         binding = FragmentConsultingDetailBinding.inflate(inflater)
         getConsultDataApi()
         getMainMemoApi()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         binding.tvDelete.setOnClickListener {
             deleteDialog()
         }
@@ -99,6 +100,7 @@ class ConsultingDetailFragment : Fragment() {
 
         binding.checkPinning.setOnClickListener {
             checkPinning()
+
         }
 
         binding.ivUploadBackground.setOnClickListener {
@@ -109,13 +111,15 @@ class ConsultingDetailFragment : Fragment() {
             clickUploadFile()
         }
         MemoSame()
+        binding.scrollEdit.visibility=View.GONE
         binding.tvDate.text = getCurrentDate()
 
         return binding.root
     }
     private fun MemoSame() {
         binding.etMemo.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (binding.etBottomMemo.text.toString() != s.toString()) {
                     binding.etBottomMemo.setText(s)
@@ -275,6 +279,7 @@ class ConsultingDetailFragment : Fragment() {
 
    private fun checkPinning() {
         if (binding.checkPinning.isChecked) {
+            binding.scrollEdit.visibility=View.VISIBLE
             binding.checkPinning.setText(R.string.unpinning)
             binding.checkPinning.setTextColor(
                 ContextCompat.getColor(
@@ -285,6 +290,7 @@ class ConsultingDetailFragment : Fragment() {
             binding.etMemo.visibility = View.GONE
             binding.etBottomMemo.visibility = View.VISIBLE
         } else {
+            binding.scrollEdit.visibility=View.GONE
             binding.checkPinning.setText(R.string.pinning)
             binding.checkPinning.setTextColor(
                 ContextCompat.getColor(

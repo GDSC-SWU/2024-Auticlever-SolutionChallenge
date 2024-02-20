@@ -351,7 +351,6 @@
             android:lineSpacingExtra="6dp"
             android:background="@color/gray6"
             android:visibility="gone"
-            android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
