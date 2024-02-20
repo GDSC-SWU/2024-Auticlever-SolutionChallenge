@@ -6,17 +6,22 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.Window
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.auticlever.R
 import com.example.auticlever.data.ApiPool
@@ -43,6 +48,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 class ConsultingDetailFragment : Fragment() {
     lateinit var binding: FragmentConsultingDetailBinding
@@ -68,7 +78,7 @@ class ConsultingDetailFragment : Fragment() {
         binding = FragmentConsultingDetailBinding.inflate(inflater)
         getConsultDataApi()
         getMainMemoApi()
-
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         binding.tvDelete.setOnClickListener {
             deleteDialog()
         }
@@ -98,8 +108,39 @@ class ConsultingDetailFragment : Fragment() {
         binding.btnConsultDetailUpload.setOnClickListener {
             clickUploadFile()
         }
+        MemoSame()
+        binding.tvDate.text = getCurrentDate()
 
         return binding.root
+    }
+    private fun MemoSame() {
+        binding.etMemo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.etBottomMemo.text.toString() != s.toString()) {
+                    binding.etBottomMemo.setText(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.etBottomMemo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (binding.etMemo.text.toString() != s.toString()) {
+                    binding.etMemo.setText(s)
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+    private fun getCurrentDate(): String {
+        // 현재 날짜 및 시간 가져오기
+        val currentDate = Calendar.getInstance().time
+
+        // 원하는 형식으로 포맷팅
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(currentDate)
     }
 
     private fun deleteDialog() {
@@ -197,9 +238,8 @@ class ConsultingDetailFragment : Fragment() {
         //파일 업로드 버튼과 점선 안보이게하기
         binding.ivUploadBackground.visibility = View.GONE
         binding.btnConsultDetailUpload.visibility = View.GONE
-        //재생바,메모,ai본문 및 요약내용 보이게하기
-        binding.bottomAppbar.visibility = View.VISIBLE
-        binding.scrollViewMemo.visibility = View.VISIBLE
+        //메모,ai본문 및 요약내용 보이게하기
+        binding.etBottomMemo.visibility = View.VISIBLE
         binding.tvAiSummarizeTitle.visibility = View.VISIBLE
         binding.tvAiSummarize.visibility = View.VISIBLE
         binding.tvConsultingContentTitle.visibility = View.VISIBLE
@@ -243,7 +283,7 @@ class ConsultingDetailFragment : Fragment() {
                 )
             )
             binding.etMemo.visibility = View.GONE
-            binding.scrollViewMemo.visibility = View.VISIBLE
+            binding.etBottomMemo.visibility = View.VISIBLE
         } else {
             binding.checkPinning.setText(R.string.pinning)
             binding.checkPinning.setTextColor(
@@ -253,7 +293,7 @@ class ConsultingDetailFragment : Fragment() {
                 )
             )
             binding.etMemo.visibility = View.VISIBLE
-            binding.scrollViewMemo.visibility = View.GONE
+            binding.etBottomMemo.visibility = View.GONE
         }
     }
 

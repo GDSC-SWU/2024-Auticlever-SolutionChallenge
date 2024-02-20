@@ -146,6 +146,7 @@
                 android:paddingBottom="20dp"
                 android:text="Showing multiple emotions\n If it gets long,\n show it like this. If it gets long, show it like this."
                 android:textSize="14sp"
+                android:textColor="@color/gray2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -334,97 +335,32 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-
-    <View
-        android:id="@+id/bottom_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:visibility="gone"
-        android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView_memo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/tv_start_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginStart="10dp"
-        android:text="@string/start_time"
-        android:textAppearance="@font/font_pretendard_regular"
-        android:textSize="12sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
-        app:layout_constraintStart_toStartOf="@+id/bottom_appbar"/>
-
-    <TextView
-        android:id="@+id/tv_end_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/end_time"
-        android:textAppearance="@font/font_pretendard_regular"
-        android:textSize="12sp"
-        android:textColor="@color/gray3"
-        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
-
-    <ImageButton
-        android:id="@+id/btn_timeago"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginStart="91dp"
-        android:src="@drawable/ic_timeago"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
-        app:layout_constraintStart_toStartOf="@+id/bottom_appbar"/>
-
-    <ImageButton
-        android:id="@+id/btn_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:src="@drawable/ic_play"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
-        app:layout_constraintStart_toStartOf="@+id/bottom_appbar"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
-
-    <ImageButton
-        android:id="@+id/btn_timelater"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="91dp"
-        android:src="@drawable/ic_timelater"
-        android:background="@android:color/transparent"
-        app:layout_constraintTop_toTopOf="@+id/bottom_appbar"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_appbar"/>
-
     <ScrollView
-        android:id="@+id/scrollView_memo"
         android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintStart_toStartOf="parent" >
 
         <EditText
             android:id="@+id/et_bottom_memo"
             android:layout_width="match_parent"
             android:layout_height="102dp"
+            android:gravity="top"
+            android:isScrollContainer="true"
+            android:minLines="4"
+            android:maxLines="4"
+            android:inputType="textMultiLine"
             android:paddingVertical="7dp"
             android:paddingHorizontal="20dp"
-            android:text="@string/memo"
+            android:text="@string/none_memo"
             android:textAppearance="@font/font_pretendard_regular"
             android:textSize="14sp"
             android:lineSpacingExtra="6dp"
-            android:background="@color/gray6" />
-
+            android:background="@color/gray6"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

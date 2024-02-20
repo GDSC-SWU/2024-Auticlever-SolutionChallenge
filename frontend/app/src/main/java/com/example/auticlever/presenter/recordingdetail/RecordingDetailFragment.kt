@@ -35,6 +35,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.InputStream
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -83,10 +84,6 @@ class RecordingDetailFragment : Fragment() {
 
         binding.checkPinning.setOnClickListener{
             CheckPinning()
-        }
-
-        binding.btnEdit.setOnClickListener{
-            KeyboardUp()
         }
 
         binding.checkPlay.setOnClickListener{
@@ -146,6 +143,7 @@ class RecordingDetailFragment : Fragment() {
         DeleteDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         DeleteDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         DeleteDialog.show()
+
     }
 
     private fun SaveDialog() {
@@ -154,6 +152,7 @@ class RecordingDetailFragment : Fragment() {
         SaveDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         SaveDialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         SaveDialog.show()
+
     }
 
     private fun LeaveDialog() {
@@ -324,7 +323,21 @@ class RecordingDetailFragment : Fragment() {
             getConversationDataService.getConversationData(conversationId).execute().body()!!
         }
     }
+    private fun convertDateFormat(inputDate: String): String {
+        try {
+            // 기존 날짜 형식 지정
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val date = inputFormat.parse(inputDate)
 
+            // 새로운 날짜 형식으로 포맷팅
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            return outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            // 예외 처리: 날짜 형식이 잘못된 경우 처리할 내용을 여기에 추가
+            return "날짜 형식 오류"
+        }
+    }
     private fun setupConversationData(conversationData: ConversationData) {
         if (conversationData.cvMemo_data.firstOrNull()?.content != null) {
             binding.etMemo.text = Editable.Factory.getInstance().newEditable(conversationData.cvMemo_data.firstOrNull()?.content)
@@ -335,7 +348,7 @@ class RecordingDetailFragment : Fragment() {
         binding.etTitleKeyword.text = Editable.Factory.getInstance().newEditable(conversationData.conversation_data.keyword)
         binding.tvAiSummarize.text = conversationData.conversation_data.summary
         binding.tvRecordingContent.text = conversationData.conversation_data.content
-        binding.tvDate.text = conversationData.conversation_data.date
+        binding.tvDate.text = convertDateFormat(conversationData.conversation_data.date)
     }
 
     fun postConversationMemo(conversationId: Int, memo: String) {
