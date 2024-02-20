@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/recording_circle" />
+        android:background="@drawable/recording_circle" />
 
     <TextView
         android:id="@+id/tv_day1"
@@ -20,8 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="6dp"
-        android:textColor="#FF905A6E"
+        android:textColor="@color/purpletext"
         android:textSize="12sp"
+        android:textAppearance="@font/font_pretendard_regular"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
         app:layout_constraintTop_toTopOf="@id/iv_circle"
         tools:text="Fri"/>
@@ -32,8 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="20dp"
-        android:textColor="#FF905A6E"
+        android:textColor="@color/purpletext"
         android:textSize="12sp"
+        android:textStyle="bold"
+        android:textAppearance="@font/font_pretendard_regular"
         app:layout_constraintStart_toStartOf="@id/iv_circle"
         app:layout_constraintTop_toTopOf="@id/iv_circle"
         tools:text="19"/>
@@ -43,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="11.5dp"
         android:fontFamily="@font/font_pretendard_regular"
         android:textColor="@color/black"
         android:textSize="14sp"
@@ -51,24 +55,11 @@
         tools:text="Airplane, airplane, airplane" />
 
     <TextView
-        android:id="@+id/tv_text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="@font/font_pretendard_regular"
-        android:textColor="@color/gray3"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/iv_circle"
-        app:layout_constraintTop_toBottomOf="@id/tv_text1"
-        tools:text="08:02 ~ 08:17 (15분)" />
-
-    <TextView
         android:id="@+id/tv_memo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="19.5dp"
         android:paddingVertical="12dp"
         android:paddingLeft="16dp"
         android:paddingRight="11dp"
@@ -76,7 +67,7 @@
         android:lineSpacingExtra="6dp"
         android:background="@drawable/recording_rv_memo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_text2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_text1"
         tools:text="I don't answer topics I'm not nterested in." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

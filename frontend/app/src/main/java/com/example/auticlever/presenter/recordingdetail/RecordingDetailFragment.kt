@@ -1,7 +1,9 @@
 package com.example.auticlever.presenter.recordingdetail
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -17,7 +19,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import com.example.auticlever.R
 import com.example.auticlever.data.ApiPool
 import com.example.auticlever.data.dto.ConversationData
@@ -69,8 +73,16 @@ class RecordingDetailFragment : Fragment() {
         isFragmentActive = true
         handler = Handler()
 
-        playFile()
-        getConversationDataApi()
+        if (arguments?.getInt("conversationId", -1) != null) {
+            val conversationIdFromMain: Int = arguments?.getInt("conversationId", -1) ?: -1
+            getConversationDataApi(conversationIdFromMain)
+            playFile(conversationIdFromMain)
+        }
+        if (arguments?.getInt("conversationID", -1) != null) {
+            val conversationIdFromRecording: Int = arguments?.getInt("conversationID", -1) ?: -1
+            getConversationDataApi(conversationIdFromRecording)
+            playFile(conversationIdFromRecording)
+        }
 
         binding.tvDelete.setOnClickListener{
             DeleteDialog()
@@ -277,8 +289,7 @@ class RecordingDetailFragment : Fragment() {
         return mp3File
     }
 
-    private fun playFile() {
-        val conversationId = arguments?.getInt("conversationId", -1) ?: -1
+    private fun playFile(conversationId: Int) {
         if (conversationId != -1) {
             GlobalScope.launch(Dispatchers.IO) {
                 try {
@@ -303,11 +314,11 @@ class RecordingDetailFragment : Fragment() {
     }
 
 
-    private fun getConversationDataApi() {
+    private fun getConversationDataApi(conversationId: Int) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 // 대화 데이터 가져오기
-                val conversationData = getConversationData()
+                val conversationData = getConversationData(conversationId)
 
                 // 대화 데이터를 UI에 설정
                 setupConversationData(conversationData)
@@ -317,8 +328,9 @@ class RecordingDetailFragment : Fragment() {
         }
     }
 
-    private suspend fun getConversationData(): ConversationData {
-        val conversationId = arguments?.getInt("conversationId", -1) ?: -1
+    private suspend fun getConversationData(conversationId: Int): ConversationData {
+        Log.d("bundle", conversationId.toString())
+
         return withContext(Dispatchers.IO) {
             getConversationDataService.getConversationData(conversationId).execute().body()!!
         }
@@ -391,7 +403,15 @@ class RecordingDetailFragment : Fragment() {
         super.onDestroyView()
         isFragmentActive = false
         handler.removeCallbacksAndMessages(null)
-        mediaPlayer.stop()
-        mediaPlayer.release()
+        try {
+            mediaPlayer?.apply {
+                if (isPlaying) {
+                    stop()
+                }
+                release()
+            }
+        } catch (e: Exception) {
+            Log.e("Error", "Error releasing mediaPlayer: ${e.message}")
+        }
     }
 }
