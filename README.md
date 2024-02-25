@@ -1,6 +1,6 @@
 # 2024 Solution Challenge - Auticlever :sparkles:
 
-<img width="900" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/edb422d9-b191-49d2-a0d4-93b38604ee91"/>
+<img width="900" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/cb3f030b-765a-45e4-947c-f8143d80eb86"/>
 
 ## 📢 Project Introduction
 High-functioning autism falls into the normal category in official language evaluation, but it actually has difficulty communicating one's intentions to others or understanding others' intentions.
@@ -28,14 +28,16 @@ This allows individuals with autism to lead healthy and stable lives without bei
 
 
 ## 📹 Demo 
-추후 기재
+[![Video Label](https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/b2684ee6-06a9-4d6e-959b-259ea90d9eed)](https://youtu.be/BWU9V4x1pSo)
+
 
 ## ❓How to use 
 
 ※ This app only works on Android OS.
 
-<img width="1000" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/3831c381-bb48-4ebc-9344-ed8d492edf74"/>
-
+<img width="1000" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/b9661de8-062f-471a-add6-8263f6ed0059"/>
+<img width="1000" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/d8830f5a-ea72-4cb1-bc19-d3165d4757b5"/>
+<img width="1000" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/b2e72b2a-ec6b-4947-a0ed-16cce95eaa00"/>
 
 ## 👩🏻‍💻 Contributors
 
