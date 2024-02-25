@@ -1,6 +1,6 @@
 # 2024 Solution Challenge - Auticlever :sparkles:
 
-<img width="900" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/3831c381-bb48-4ebc-9344-ed8d492edf74"/>
+<img width="900" src="https://github.com/GDSC-SWU/2024-Auticlever-SolutionChallenge/assets/91856370/edb422d9-b191-49d2-a0d4-93b38604ee91"/>
 
 ## 📢 Project Introduction
 High-functioning autism falls into the normal category in official language evaluation, but it actually has difficulty communicating one's intentions to others or understanding others' intentions.
